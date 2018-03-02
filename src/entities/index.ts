@@ -1,5 +1,3 @@
-// @flow
-
 import { combineReducers, Reducer } from 'redux';
 import { Entities } from './state';
 
