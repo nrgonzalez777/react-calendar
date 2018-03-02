@@ -1,17 +1,15 @@
+// @flow
+
 import React from 'react';
-import logo from './logo.svg';
-import styles from './App.css';
+import { Provider } from 'react-redux';
+import configureStore from './store/configureStore';
+
+const store = configureStore();
 
 const App = () => (
-  <div className={styles.app}>
-    <header className={styles.appHeader}>
-      <img src={logo} className={styles.appLogo} alt="logo" />
-      <h1 className={styles.appTitle}>Welcome to React</h1>
-    </header>
-    <p className={styles.appIntro}>
-          To get started, edit <code>src/App.js</code> and save to reload.
-    </p>
-  </div>
+  <Provider store={store}>
+    <div />
+  </Provider>
 );
 
 export default App;
