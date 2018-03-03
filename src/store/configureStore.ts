@@ -7,4 +7,8 @@ import { AppState } from './state';
 const middleware = [reduxThunk];
 
 export default (): Store<AppState> =>
-  createStore<AppState>(rootReducer, <AppState> {}, composeWithDevTools(applyMiddleware(...middleware)));
+  createStore<AppState>(
+    rootReducer,
+    <AppState> {},
+    composeWithDevTools(applyMiddleware(...middleware))
+  );
