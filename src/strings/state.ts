@@ -1,4 +1,8 @@
 export interface Strings {
+  appointmentEditor: {
+    placeholderTitle: string;
+    saveLabel: string;
+  };
   dayAbbr: {
     sunday: string;
     monday: string;

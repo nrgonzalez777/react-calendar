@@ -15,9 +15,10 @@ props.isVisible ? (
             className={styles.title}
             type="text"
             autoFocus={true}
-            placeholder={'Enter title...'}
+            placeholder={props.placeholderTitle}
+            onChange={evt => props.onUpdateTitle(evt.target.value)}
           />
-          <div className={styles.close}onClick={props.onCloseSelected}>
+          <div className={styles.close} onClick={props.onCloseSelected}>
             <Close />
           </div>
         </div>
@@ -26,7 +27,13 @@ props.isVisible ? (
           <input className={styles.datetime} type="datetime-local" id="start" />
           <label htmlFor="end">End</label>
           <input className={styles.datetime} type="datetime-local" id="end" />
-          <input type="button" className={styles.save} value="Save" />
+          <input
+            type="button"
+            className={styles.save}
+            value={props.saveLabel}
+            disabled={props.isDisabled}
+            onClick={props.onSaveAppointment}
+          />
         </div>
       </div>
     </div>

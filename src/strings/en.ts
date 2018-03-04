@@ -1,6 +1,10 @@
 import { Strings } from './state';
 
 const en: Strings = {
+  appointmentEditor: {
+    placeholderTitle: 'Enter title...',
+    saveLabel: 'Save',
+  },
   dayAbbr: {
     sunday: 'Su',
     monday: 'M',
