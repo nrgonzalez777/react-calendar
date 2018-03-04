@@ -5,7 +5,7 @@ import { DayProps } from './props';
 import * as styles from './styles.css';
 
 const DayView = (props: DayProps) => (
-    <div className={styles.day}>{props.dayNumber}</div>
+    <div className={styles.day}>{props.dayOfMonth}</div>
 );
 
 export default connector(DayView);

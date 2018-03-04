@@ -3,7 +3,7 @@ export interface DayInputProps {
 }
 
 export interface DayStateProps {
-  dayNumber: number;
+  dayOfMonth: number;
   hasAppointment: boolean;
   isCurrentDay: boolean;
 }

@@ -6,9 +6,9 @@ const en: Strings = {
     monday: 'M',
     tuesday: 'Tu',
     wednesday: 'W',
-    thursday: 'TH',
+    thursday: 'Th',
     friday: 'F',
-    saturday: 'SA'
+    saturday: 'Sa'
   }
 };
 

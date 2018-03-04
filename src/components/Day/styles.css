@@ -2,6 +2,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 1 0 auto;
+    flex: 1 0;
     color: black;
+}
+
+.day:hover {
+    cursor: pointer;
+    background-color: rgba(39, 46, 57, 0.1);
 }

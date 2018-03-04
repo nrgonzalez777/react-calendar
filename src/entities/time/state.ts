@@ -1,6 +1,10 @@
+import { Moment } from 'moment';
+
 export interface Month {
   monthId: string;
+  monthNumber: number;
   weeksByOrder: string[];
+  moment: Moment;
 }
 
 export interface MonthMap {
@@ -19,6 +23,8 @@ export interface WeekMap {
 export interface Day {
   dayId: string;
   appointmentsById: { [key: string]: string};
+  moment: Moment;
+  dayOfMonth: number;
 }
 
 export interface DayMap {

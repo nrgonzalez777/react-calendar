@@ -8,7 +8,7 @@ import Day from '../Day';
 
 const WeekView = (props: WeekProps) => (
     <div className={styles.content}>
-      {props.dayIds.map(dayId => <Day key={dayId} dayId={dayId} />)}
+      {props.dayIds ? props.dayIds.map(dayId => <Day key={dayId} dayId={dayId} />) : null}
     </div>
   );
 

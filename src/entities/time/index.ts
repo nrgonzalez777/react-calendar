@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import { Time, Month, Week, Day } from './state';
 import { APP_INIT } from 'App/store/types';
 import { getMonthIdFromMoment, getWeekIdFromMoment, getDayIdFromMoment } from 'helpers/timeHelpers';
+import { CALENDAR_PREVIOUS_MONTH, CALENDAR_NEXT_MONTH } from 'components/Calendar/store/types';
 
 const initState: Time = {
   months: {},
@@ -24,6 +25,8 @@ const createTimeEntitiesForMonth = (state: Time, datetime: moment.Moment): Time 
 
   const newMonth: Month = {
     monthId,
+    moment: datetime.clone(),
+    monthNumber: datetime.month(),
     weeksByOrder: []
   };
 
@@ -55,7 +58,9 @@ const createTimeEntitiesForMonth = (state: Time, datetime: moment.Moment): Time 
 
       const newDay: Day = {
         dayId,
-        appointmentsById: {}
+        appointmentsById: {},
+        moment: weekDay,
+        dayOfMonth: weekDay.date()
       };
 
       newState.days[dayId] = newDay;
@@ -72,7 +77,9 @@ const createTimeEntitiesForMonth = (state: Time, datetime: moment.Moment): Time 
 const reducer: Reducer<Time> = (state: Time = initState, action: AnyAction): Time => {
   switch (action.type) {
     case APP_INIT:
-      return createTimeEntitiesForMonth(state, action.payload.now);
+    case CALENDAR_PREVIOUS_MONTH:
+    case CALENDAR_NEXT_MONTH:
+      return createTimeEntitiesForMonth(state, action.payload.month);
     default:
       return state;
   }

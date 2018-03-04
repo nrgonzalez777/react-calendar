@@ -5,7 +5,7 @@ import * as types from './types';
 export const applicationInit = () => ({
   type: types.APP_INIT,
   payload: {
-    now: moment(),
+    month: moment(),
   },
   error: false,
   metadata: {},

@@ -2,9 +2,10 @@ import { connect } from 'react-redux';
 import { AppState } from 'store/state';
 
 import { DayInputProps, DayStateProps, DayProps } from './props';
+import { getDisplayDate } from './store/selectors';
 
 const mapStateToProps = (state: AppState, props: DayProps): DayStateProps => ({
-  dayNumber: 1,
+  dayOfMonth: getDisplayDate(state, props.dayId),
   hasAppointment: false,
   isCurrentDay: false,
 });
