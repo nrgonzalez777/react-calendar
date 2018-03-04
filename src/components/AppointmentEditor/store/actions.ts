@@ -1,7 +1,7 @@
 import * as types from './types';
 
-export const addAppointment = () => ({
-  type: types.ADD_APPOINTMENT,
+export const closeEditor = () => ({
+  type: types.APPOINTMENT_EDITOR_CLOSE,
   payload: {},
   error: false,
   metadata: {},

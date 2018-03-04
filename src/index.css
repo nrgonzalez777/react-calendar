@@ -3,3 +3,20 @@ body {
   padding: 0;
   font-family: 'Open Sans', sans-serif;
 }
+
+* {box-sizing: border-box;}
+
+input {
+  background-color: inherit;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+input[type="text"] {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

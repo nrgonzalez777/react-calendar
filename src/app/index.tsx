@@ -5,6 +5,7 @@ import { AppProps } from './props';
 import * as styles from './styles.css';
 import Calendar from '../components/Calendar';
 import AddAppointment from '../components/AddAppointment';
+import AppointmentEditor from '../components/AppointmentEditor';
 
 class AppView extends React.Component<AppProps> {
 
@@ -17,6 +18,7 @@ class AppView extends React.Component<AppProps> {
       <div className={styles.content}>
         <Calendar />
         <AddAppointment />
+        <AppointmentEditor />
       </div>
     );
   }
