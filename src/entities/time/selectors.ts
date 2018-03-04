@@ -34,5 +34,11 @@ export const getDayById = (state: AppState, dayId: string): Day =>
 export const getDayByIdOrDefault = (state: AppState, dayId: string): Day =>
   getDayById(state, dayId) || {};
 
+export const getDayMoment = (state: AppState, dayId: string): Moment =>
+  getDayByIdOrDefault(state, dayId).moment;
+
 export const getDayOfMonth = (state: AppState, dayId: string): number =>
   getDayByIdOrDefault(state, dayId).dayOfMonth;
+
+export const getDayMonthId = (state: AppState, dayId: string): string =>
+  getDayByIdOrDefault(state, dayId).monthId;

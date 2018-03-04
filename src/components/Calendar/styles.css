@@ -65,8 +65,16 @@
     margin-right: 15px;
 }
 
+.left:hover {
+    transform: scale(1.1);
+  }
+
 .right {
     cursor: pointer;
     font-size: 16px;
     margin-left: 15px;
 }
+
+.right:hover {
+    transform: scale(1.1);
+  }

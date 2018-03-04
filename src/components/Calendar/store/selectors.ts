@@ -8,15 +8,15 @@ export const getState = (state: AppState): Calendar => state.components.calendar
 export const getSelectedMonthId = (state: AppState): string =>
   getState(state).selectedMonthId;
 
-export const getCurrentMonthMoment = (state: AppState): Moment =>
+export const getSelectedMonthMoment = (state: AppState): Moment =>
   getMonthMoment(state, getSelectedMonthId(state));
 
-export const getCurrentMonthTitle = (state: AppState): string => {
-  const moment = getCurrentMonthMoment(state);
+export const getSelectedMonthTitle = (state: AppState): string => {
+  const moment = getSelectedMonthMoment(state);
   return moment ? moment.format('MMMM YYYY') : '';
 };
 
-export const getCurrentMonthWeeks = (state: AppState): string[] =>
+export const getSelectedMonthWeeks = (state: AppState): string[] =>
   getMonthWeeksByOrder(state, getSelectedMonthId(state));
 
 export const getCurrentDayId = (state: AppState): string =>

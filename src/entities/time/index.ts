@@ -58,6 +58,7 @@ const createTimeEntitiesForMonth = (state: Time, datetime: moment.Moment): Time 
 
       const newDay: Day = {
         dayId,
+        monthId: getMonthIdFromMoment(weekDay),
         appointmentsById: {},
         moment: weekDay,
         dayOfMonth: weekDay.date()

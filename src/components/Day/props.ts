@@ -7,6 +7,7 @@ export interface DayConnectProps {
   hasAppointment: boolean;
   isCurrentDay: boolean;
   isSelectedDay: boolean;
+  isDayOutOfSelectedMonth: boolean;
 }
 
 export interface DayDispatchProps {

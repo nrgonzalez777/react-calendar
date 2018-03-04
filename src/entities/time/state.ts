@@ -22,6 +22,7 @@ export interface WeekMap {
 
 export interface Day {
   dayId: string;
+  monthId: string;
   appointmentsById: { [key: string]: string};
   moment: Moment;
   dayOfMonth: number;

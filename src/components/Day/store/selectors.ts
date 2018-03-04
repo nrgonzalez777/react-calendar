@@ -1,6 +1,10 @@
-import { getDayOfMonth } from 'entities/time/selectors';
+import { getDayOfMonth, getDayMonthId } from 'entities/time/selectors';
 import { AppState } from 'store/state';
-import { getCurrentDayId, getSelectedDayId } from '../../Calendar/store/selectors';
+import {
+  getCurrentDayId,
+  getSelectedDayId,
+  getSelectedMonthId,
+} from '../../Calendar/store/selectors';
 
 export const getDisplayDate = getDayOfMonth;
 
@@ -9,3 +13,6 @@ export const isCurrentDay = (state: AppState, dayId: string): boolean =>
 
 export const isSelectedDay = (state: AppState, dayId: string): boolean =>
   getSelectedDayId(state) === dayId;
+
+export const isDayInCurrentMonth = (state: AppState, dayId: string): boolean =>
+  getDayMonthId(state, dayId) === getSelectedMonthId(state);

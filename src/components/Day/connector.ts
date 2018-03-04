@@ -2,7 +2,12 @@ import { connect, Dispatch } from 'react-redux';
 import { AppState } from 'store/state';
 
 import { DayInputProps, DayConnectProps, DayDispatchProps, DayProps } from './props';
-import { getDisplayDate, isCurrentDay, isSelectedDay } from './store/selectors';
+import {
+  getDisplayDate,
+  isCurrentDay,
+  isSelectedDay,
+  isDayInCurrentMonth
+} from './store/selectors';
 import { changeSelectedDay } from './store/actions';
 
 const mapStateToProps = (state: AppState, props: DayProps): DayConnectProps => ({
@@ -10,6 +15,7 @@ const mapStateToProps = (state: AppState, props: DayProps): DayConnectProps => (
   hasAppointment: false,
   isCurrentDay: isCurrentDay(state, props.dayId),
   isSelectedDay: isSelectedDay(state, props.dayId),
+  isDayOutOfSelectedMonth:  !isDayInCurrentMonth(state, props.dayId)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AppState>): DayDispatchProps => ({
