@@ -1,7 +1,8 @@
 import { AnyAction, Reducer } from 'redux';
 import * as moment from 'moment';
 import { Time, Month, Week, Day } from './state';
-import { APP_INIT } from 'app/types';
+import { APP_INIT } from 'App/store/types';
+import { getMonthIdFromMoment, getWeekIdFromMoment, getDayIdFromMoment } from 'helpers/timeHelpers';
 
 const initState: Time = {
   months: {},
@@ -9,22 +10,10 @@ const initState: Time = {
   days: {}
 };
 
-const getDayId = (datetime: moment.Moment): string => {
-  return datetime.format('MM-DD-YYYY');
-};
-
-const getWeekId = (datetime: moment.Moment, numWeek: number): string => {
-  return `${numWeek}-${datetime.format('YYYY')}`;
-};
-
-const getMonthId = (datetime: moment.Moment): string => {
-  return datetime.format('MM-YYYY');
-};
-
 const createTimeEntitiesForMonth = (state: Time, datetime: moment.Moment): Time => {
   // Unfortunately Moment is a mutable library, so we need to be careful
   // and clone moments for mutable operations.
-  const monthId = getMonthId(datetime);
+  const monthId = getMonthIdFromMoment(datetime);
 
   // Don't recreate a month.
   if (state.months[monthId] !== undefined) {
@@ -42,7 +31,7 @@ const createTimeEntitiesForMonth = (state: Time, datetime: moment.Moment): Time 
   const endWeek = datetime.clone().endOf('month').week();
 
   for (let weekIndex = startWeek; weekIndex <= endWeek; weekIndex += 1) {
-    const weekId = getWeekId(datetime, weekIndex);
+    const weekId = getWeekIdFromMoment(datetime, weekIndex);
     newMonth.weeksByOrder.push(weekId);
 
     if (state.weeks[weekId] !== undefined) {
@@ -57,7 +46,7 @@ const createTimeEntitiesForMonth = (state: Time, datetime: moment.Moment): Time 
     const startOfWeekDay = moment().week(weekIndex).startOf('week');
     for (let dayIndex = 0; dayIndex < 7; dayIndex += 1) {
       const weekDay = startOfWeekDay.clone().add(dayIndex, 'day');
-      const dayId = getDayId(weekDay);
+      const dayId = getDayIdFromMoment(weekDay);
       newWeek.daysByOrder.push(dayId);
 
       if (state.days[dayId] !== undefined) {

@@ -1,0 +1,5 @@
+.content {
+    background-color: red;
+    width: 100%;
+    flex: 1 0 20%;
+}
