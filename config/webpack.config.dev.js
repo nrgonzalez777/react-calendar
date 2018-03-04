@@ -168,7 +168,8 @@ module.exports = {
                 options: {
                   camelCase : true,
                   modules: true,
-                  namedExport: true
+                  namedExport: true,
+                  localIdentName: "[name]__[local]___[hash:base64:5]"
                 },
               },
               {

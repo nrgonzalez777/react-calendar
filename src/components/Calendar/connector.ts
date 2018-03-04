@@ -9,4 +9,4 @@ const mapStateToProps = (state: AppState): CalendarProps => ({
   weekIds: getCurrentMonthWeeks(state),
 });
 
-export default connect(mapStateToProps, null);
+export default connect(mapStateToProps);

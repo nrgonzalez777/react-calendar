@@ -8,4 +8,4 @@ const mapStateToProps = (state: AppState): DayAbbreviationsProps => ({
   abbreviations: getDayAbbreviations(state),
 });
 
-export default connect(mapStateToProps, null);
+export default connect(mapStateToProps);
