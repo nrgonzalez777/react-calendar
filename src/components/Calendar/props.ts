@@ -1,11 +1,11 @@
-export interface CalendarStateProps {
+export interface CalendarConnectProps {
   monthName: string;
   weekIds: string[];
 }
 
-export interface CalendarOutputProps {
+export interface CalendarDispatchProps {
   onPreviousMonthSelected: () => void;
   onNextMonthSelected: () => void;
 }
 
-export interface CalendarProps extends CalendarStateProps, CalendarOutputProps {}
+export interface CalendarProps extends CalendarConnectProps, CalendarDispatchProps {}

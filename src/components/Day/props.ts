@@ -2,10 +2,15 @@ export interface DayInputProps {
   dayId: string;
 }
 
-export interface DayStateProps {
+export interface DayConnectProps {
   dayOfMonth: number;
   hasAppointment: boolean;
   isCurrentDay: boolean;
+  isSelectedDay: boolean;
 }
 
-export interface DayProps extends DayInputProps, DayStateProps {}
+export interface DayDispatchProps {
+  onDaySelected: (dayId: string) => void;
+}
+
+export interface DayProps extends DayInputProps, DayConnectProps, DayDispatchProps {}

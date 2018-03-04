@@ -1,6 +1,5 @@
 .content {
-    width: 900px;
-    height: 675px;
+    width: 945px;
     display: flex;
     flex-direction: column;
     background-color: #00add7;

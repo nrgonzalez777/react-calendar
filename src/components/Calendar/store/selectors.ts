@@ -5,11 +5,11 @@ import { Moment } from 'moment';
 
 export const getState = (state: AppState): Calendar => state.components.calendar;
 
-export const getCurrentMonthId = (state: AppState): string =>
-  getState(state).currentMonthId;
+export const getSelectedMonthId = (state: AppState): string =>
+  getState(state).selectedMonthId;
 
 export const getCurrentMonthMoment = (state: AppState): Moment =>
-  getMonthMoment(state, getCurrentMonthId(state));
+  getMonthMoment(state, getSelectedMonthId(state));
 
 export const getCurrentMonthTitle = (state: AppState): string => {
   const moment = getCurrentMonthMoment(state);
@@ -17,4 +17,10 @@ export const getCurrentMonthTitle = (state: AppState): string => {
 };
 
 export const getCurrentMonthWeeks = (state: AppState): string[] =>
-  getMonthWeeksByOrder(state, getCurrentMonthId(state));
+  getMonthWeeksByOrder(state, getSelectedMonthId(state));
+
+export const getCurrentDayId = (state: AppState): string =>
+  getState(state).currentDayId;
+
+export const getSelectedDayId = (state: AppState): string =>
+  getState(state).selectedDayId;

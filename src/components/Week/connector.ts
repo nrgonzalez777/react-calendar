@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import { AppState } from 'store/state';
 
-import { WeekInputProps, WeekStateProps, WeekProps } from './props';
+import { WeekInputProps, WeekConnectProps, WeekProps } from './props';
 
 import { getWeekDaysByOrder } from 'entities/time/selectors';
 
-const mapStateToProps = (state: AppState, props: WeekProps): WeekStateProps => ({
+const mapStateToProps = (state: AppState, props: WeekProps): WeekConnectProps => ({
   dayIds: getWeekDaysByOrder(state, props.weekId),
 });
 
-export default connect<WeekStateProps, {}, WeekInputProps>(mapStateToProps);
+export default connect<WeekConnectProps, {}, WeekInputProps>(mapStateToProps);

@@ -1,3 +1,5 @@
 export interface Calendar {
-  currentMonthId: string;
+  currentDayId: string;
+  selectedDayId: string;
+  selectedMonthId: string;
 }

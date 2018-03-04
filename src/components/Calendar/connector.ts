@@ -1,16 +1,16 @@
 import { connect, Dispatch } from 'react-redux';
 import { AppState } from 'store/state';
 
-import { CalendarStateProps, CalendarOutputProps } from './props';
+import { CalendarConnectProps, CalendarDispatchProps } from './props';
 import { getCurrentMonthTitle, getCurrentMonthWeeks } from './store/selectors';
 import { goToPreviousMonth, goToNextMonth } from './store/actions';
 
-const mapStateToProps = (state: AppState): CalendarStateProps => ({
+const mapStateToProps = (state: AppState): CalendarConnectProps => ({
   monthName: getCurrentMonthTitle(state),
   weekIds: getCurrentMonthWeeks(state),
 });
 
-const mapPropsToDispatch = (dispatch: Dispatch<AppState>): CalendarOutputProps => ({
+const mapPropsToDispatch = (dispatch: Dispatch<AppState>): CalendarDispatchProps => ({
   onPreviousMonthSelected: () => dispatch(goToPreviousMonth()),
   onNextMonthSelected: () => dispatch(goToNextMonth()),
 });

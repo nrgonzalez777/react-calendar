@@ -1,6 +1,6 @@
 .content {
     width: 100%;
-    flex: 1 0 20%;
+    flex: 1 0 135px;
     display: flex;
     align-items: stretch;
 }

@@ -1,12 +1,35 @@
-.day {
+.content {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 1 0;
+    flex: 1 0;   
+}
+
+.day {
     color: black;
+    border-radius: 50%;
+    width: 60%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .day:hover {
     cursor: pointer;
     background-color: rgba(39, 46, 57, 0.1);
+}
+
+.dayCurrent {
+    color: #00add7;
+}
+
+.daySelected {
+    color: white;
+    background-color: #00add7;
+}
+
+.daySelected:hover {
+    color: white;
+    background-color: #00add7;
 }

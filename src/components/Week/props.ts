@@ -2,8 +2,8 @@ export interface WeekInputProps {
   weekId: string;
 }
 
-export interface WeekStateProps {
+export interface WeekConnectProps {
   dayIds: string[];
 }
 
-export interface WeekProps extends WeekInputProps, WeekStateProps {}
+export interface WeekProps extends WeekInputProps, WeekConnectProps {}
