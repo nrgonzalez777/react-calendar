@@ -38,10 +38,11 @@
     * Appointments are shown as rectangles that stretch from your start to end times.
     * If an appointment overlaps the day boundary, the rectangle will just stretch to the boundary edge.
 * Clicking on an appointment will open the editor and allow you to edit said appointment (validation rules still apply). 
+* You can also choose to delete the appointment with the delete button. 
 
 
 ## Known Issues
 
-* Calendar generation does not work in December months.
+* Calendar generation bug where last week of the year is not properly placed in December.
 * Lack of support for smaller devices.
 * Unit tests.
