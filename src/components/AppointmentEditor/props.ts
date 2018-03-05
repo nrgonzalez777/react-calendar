@@ -7,6 +7,7 @@ export interface AppointmentEditorConnectProps {
   appointmentEnd: string;
   appointmentEndError: string;
   placeholderTitle: string;
+  deleteLabel: string;
   saveLabel: string;
 }
 
@@ -16,6 +17,7 @@ export interface AppointmentEditorDispatchProps {
   onUpdateStart: (start: string) => void;
   onUpdateEnd: (end: string) => void;
   onSaveAppointment: () => void;
+  onDeleteAppointment: () => void;
 }
 
 export interface AppointmentEditorProps

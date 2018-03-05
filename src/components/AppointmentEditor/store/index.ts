@@ -8,7 +8,8 @@ import {
   APPOINTMENT_EDITOR_UPDATE_TITLE,
   APPOINTMENT_EDITOR_SAVE,
   APPOINTMENT_EDITOR_UPDATE_START,
-  APPOINTMENT_EDITOR_UPDATE_END
+  APPOINTMENT_EDITOR_UPDATE_END,
+  APPOINTMENT_EDITOR_DELETE
 } from './types';
 import { Appointment } from 'entities/appointments/state';
 import { getDayIdFromMoment } from 'helpers/timeHelpers';
@@ -74,6 +75,7 @@ const isVisible = (state: boolean = false, action: AnyAction): boolean => {
       return true;
     case APPOINTMENT_EDITOR_CLOSE:
     case APPOINTMENT_EDITOR_SAVE:
+    case APPOINTMENT_EDITOR_DELETE:
       return false;
     default:
       return state;

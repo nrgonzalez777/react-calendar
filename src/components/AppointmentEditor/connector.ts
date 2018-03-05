@@ -2,7 +2,14 @@ import { connect, Dispatch } from 'react-redux';
 import { AppState } from 'store/state';
 
 import { AppointmentEditorConnectProps, AppointmentEditorDispatchProps } from './props';
-import { closeEditor, updateTitle, saveAppointment, updateStart, updateEnd } from './store/actions';
+import {
+  closeEditor,
+  updateTitle,
+  saveAppointment,
+  updateStart,
+  updateEnd,
+  deleteAppointment
+} from './store/actions';
 import {
   isVisible,
   getEditingAppointmentTitle,
@@ -24,6 +31,7 @@ const mapStateToProps = (state: AppState): AppointmentEditorConnectProps => ({
   appointmentEndError: getEndErrorMessage(state),
   placeholderTitle: getStrings(state).placeholderTitle,
   saveLabel: getStrings(state).saveLabel,
+  deleteLabel: getStrings(state).deleteLabel,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AppState>): AppointmentEditorDispatchProps => ({
@@ -32,6 +40,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AppState>): AppointmentEditorDisp
   onUpdateStart: (start: string) => dispatch(updateStart(start)),
   onUpdateEnd: (end: string) => dispatch(updateEnd(end)),
   onSaveAppointment: () => dispatch(saveAppointment()),
+  onDeleteAppointment: () => dispatch(deleteAppointment()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps);

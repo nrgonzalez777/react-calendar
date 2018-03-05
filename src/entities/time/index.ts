@@ -4,7 +4,10 @@ import { Time, Month, Week, Day } from './state';
 import { APP_INIT } from 'App/store/types';
 import { getMonthIdFromMoment, getWeekIdFromMoment, getDayIdFromMoment } from 'helpers/timeHelpers';
 import { CALENDAR_PREVIOUS_MONTH, CALENDAR_NEXT_MONTH } from 'components/Calendar/store/types';
-import { APPOINTMENT_EDITOR_SAVE } from 'components/AppointmentEditor/store/types';
+import {
+  APPOINTMENT_EDITOR_SAVE,
+  APPOINTMENT_EDITOR_DELETE
+} from 'components/AppointmentEditor/store/types';
 import { Appointment } from '../appointments/state';
 
 const initState: Time = {
@@ -109,6 +112,30 @@ const updateDaysWithAppointment = (state: Time, appointment: Appointment): Time 
   return newState;
 };
 
+const removeAppointmentFromDays = (
+  state: Time,
+  appointmentId: string,
+  dayIds: { [key: string]: string }): Time => {
+  const newState = { ...state };
+
+  const dayIdArray = Object.keys(dayIds);
+
+  dayIdArray.forEach((dayId) => {
+    const dayObj: Day = state.days[dayId];
+
+    // Remove appointment id to the reference collection.
+    if (dayObj) {
+      const { [appointmentId]: removed, ...newAppointments } = dayObj.appointmentsById;
+      newState.days[dayId] = {
+        ...dayObj,
+        appointmentsById: newAppointments,
+      };
+    }
+  });
+
+  return newState;
+};
+
 const reducer: Reducer<Time> = (state: Time = initState, action: AnyAction): Time => {
   switch (action.type) {
     case APP_INIT:
@@ -121,6 +148,8 @@ const reducer: Reducer<Time> = (state: Time = initState, action: AnyAction): Tim
       );
     case APPOINTMENT_EDITOR_SAVE:
       return updateDaysWithAppointment(state, action.payload.newAppointment);
+    case APPOINTMENT_EDITOR_DELETE:
+      return removeAppointmentFromDays(state, action.payload.appointmentId, action.payload.dayIds);
     default:
       return state;
   }

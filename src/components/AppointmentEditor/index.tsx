@@ -44,6 +44,12 @@ props.isVisible ? (
           <div className={styles.error}>{props.appointmentEndError}</div>
           <input
             type="button"
+            className={styles.deleteBtn}
+            value={props.deleteLabel}
+            onClick={props.onDeleteAppointment}
+          />
+          <input
+            type="button"
             className={styles.save}
             value={props.saveLabel}
             disabled={props.isDisabled}

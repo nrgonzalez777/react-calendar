@@ -65,6 +65,26 @@ label {
   margin-right: 25%;
 }
 
+.deleteBtn {
+  background-color: #00add7;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.deleteBtn:disabled {
+  background-color:  rgba(209, 214, 221, 0.5);
+  cursor: default;
+}
+
+.deleteBtn:hover {
+  transform: scale(1.1);
+}
+
+.deleteBtn:hover:disabled {
+  transform: scale(1);
+}
+
 .save {
   float: right;
   background-color: #00add7;

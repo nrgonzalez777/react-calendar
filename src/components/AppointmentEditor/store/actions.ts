@@ -78,3 +78,21 @@ export const saveAppointment = () => (
     metadata: {},
   });
 };
+
+export const deleteAppointment = () => (
+  dispatch: Dispatch<AppState>,
+  getState: () => AppState,
+) => {
+  const state = getState();
+  const appointment = getEditingAppointment(state);
+
+  dispatch({
+    type: types.APPOINTMENT_EDITOR_DELETE,
+    payload: {
+      appointmentId: appointment.appointmentId,
+      dayIds: appointment.daysById,
+    },
+    error: false,
+    metadata: {},
+  });
+};

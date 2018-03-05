@@ -3,6 +3,7 @@ import { Strings } from './state';
 const en: Strings = {
   appointmentEditor: {
     placeholderTitle: 'Title required...',
+    deleteLabel: 'Delete',
     saveLabel: 'Save',
     startInvalidError: 'Start time invalid',
     startPastError: 'Start must be in the future',

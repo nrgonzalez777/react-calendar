@@ -2,6 +2,7 @@ export interface Strings {
   appointmentEditor: {
     placeholderTitle: string;
     saveLabel: string;
+    deleteLabel: string;
     startInvalidError: string;
     startPastError: string;
     startGreaterError: string;

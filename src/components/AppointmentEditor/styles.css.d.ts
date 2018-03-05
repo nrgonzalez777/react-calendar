@@ -6,5 +6,6 @@ export const title: string;
 export const close: string;
 export const form: string;
 export const datetime: string;
+export const deleteBtn: string;
 export const save: string;
 export const error: string;
