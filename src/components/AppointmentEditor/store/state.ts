@@ -1,7 +1,7 @@
 import { Appointment } from 'entities/appointments/state';
 
 export interface Validation {
-  doesAppointmentConflict: boolean;
+  appointmentConflictId: string;
   hasSetStart: boolean;
   hasSetEnd: boolean;
   isStartValid: boolean;

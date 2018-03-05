@@ -2,7 +2,6 @@ import { Moment } from 'moment';
 
 export interface Appointment {
   appointmentId: string;
-  daysById: { [key: string]: string};
   title: string;
   start?: Moment;
   end?: Moment;

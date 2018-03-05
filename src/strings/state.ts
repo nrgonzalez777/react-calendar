@@ -7,6 +7,7 @@ export interface Strings {
     startGreaterError: string;
     endInvalidError: string;
     endPastError: string;
+    conflictErrorFormat: string;
   };
   dayAbbr: {
     sunday: string;

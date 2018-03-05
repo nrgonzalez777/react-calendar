@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import * as types from './types';
 import { getEditingAppointment } from './selectors';
+import { getAppointmentsArray } from 'entities/appointments/selectors';
 
 export const closeEditor = () => ({
   type: types.APPOINTMENT_EDITOR_CLOSE,
@@ -25,10 +26,12 @@ export const updateStart = (start: string) => (
 ) => {
   const state = getState();
   const end = getEditingAppointment(state).end;
+  const currentAppointments = getAppointmentsArray(state);
 
   dispatch({
     type: types.APPOINTMENT_EDITOR_UPDATE_START,
     payload: {
+      currentAppointments,
       end,
       now: moment(),
       start: moment(start),
@@ -44,10 +47,12 @@ export const updateEnd = (end: string) => (
 ) => {
   const state = getState();
   const start = getEditingAppointment(state).start;
+  const currentAppointments = getAppointmentsArray(state);
 
   dispatch({
     type: types.APPOINTMENT_EDITOR_UPDATE_END,
     payload: {
+      currentAppointments,
       start,
       now: moment(),
       end: moment(end)

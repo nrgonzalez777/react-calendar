@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { AppState } from 'store/state';
+import { getAppointmentById } from 'entities/appointments/selectors';
 
 export const getState = (state: AppState) => state.components.appointmentEditor;
 
@@ -35,7 +36,8 @@ export const isValid = (state: AppState) => {
     && validation.isStartInTheFuture
     && validation.isStartLessThanEnd
     && validation.isEndValid
-    && validation.isEndInTheFuture;
+    && validation.isEndInTheFuture
+    && !validation.appointmentConflictId;
 };
 
 export const getStartErrorMessage = (state: AppState) => {
@@ -75,6 +77,12 @@ export const getEndErrorMessage = (state: AppState) => {
 
   if (!validation.isEndInTheFuture) {
     return strings.endPastError;
+  }
+
+  if (validation.appointmentConflictId) {
+    // TODO: integrate format library
+    return strings.conflictErrorFormat
+    + getAppointmentById(state, validation.appointmentConflictId).title;
   }
 
   return '';

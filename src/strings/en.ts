@@ -9,6 +9,7 @@ const en: Strings = {
     startGreaterError: 'Start must be less than end',
     endInvalidError: 'End time invalid',
     endPastError: 'End must be in the future',
+    conflictErrorFormat: 'Conflicts with '
   },
   dayAbbr: {
     sunday: 'Su',
