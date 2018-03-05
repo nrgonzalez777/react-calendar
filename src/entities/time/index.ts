@@ -35,11 +35,13 @@ const createTimeEntitiesForMonth = (
     weeksByOrder: []
   };
 
-  const startWeek = datetime.clone().startOf('month').week();
-  const endWeek = datetime.clone().endOf('month').week();
+  const startWeek = datetime.clone().startOf('month');
+  const endWeek = datetime.clone().endOf('month');
+  const numWeeks = endWeek.diff(startWeek, 'week');
 
-  for (let weekIndex = startWeek; weekIndex <= endWeek; weekIndex += 1) {
-    const weekId = getWeekIdFromMoment(datetime, weekIndex);
+  for (let weekIndex = 0; weekIndex <= numWeeks; weekIndex += 1) {
+    const week = startWeek.clone().add(weekIndex, 'week').startOf('week');
+    const weekId = getWeekIdFromMoment(week);
     newMonth.weeksByOrder.push(weekId);
 
     if (state.weeks[weekId] !== undefined) {
@@ -51,9 +53,8 @@ const createTimeEntitiesForMonth = (
       daysByOrder: []
     };
 
-    const startOfWeekDay = moment().week(weekIndex).startOf('week');
     for (let dayIndex = 0; dayIndex < 7; dayIndex += 1) {
-      const weekDay = startOfWeekDay.clone().add(dayIndex, 'day');
+      const weekDay = week.clone().add(dayIndex, 'day');
       const dayId = getDayIdFromMoment(weekDay);
       newWeek.daysByOrder.push(dayId);
 
