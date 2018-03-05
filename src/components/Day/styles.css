@@ -1,4 +1,5 @@
 .content {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,4 +37,13 @@
 .daySelected:hover {
     color: white;
     background-color: #00add7;
+}
+
+.hasAppointment {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    bottom: 25%;
+    background-color: #3fd83f;
 }

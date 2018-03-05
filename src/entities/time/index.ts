@@ -4,6 +4,8 @@ import { Time, Month, Week, Day } from './state';
 import { APP_INIT } from 'App/store/types';
 import { getMonthIdFromMoment, getWeekIdFromMoment, getDayIdFromMoment } from 'helpers/timeHelpers';
 import { CALENDAR_PREVIOUS_MONTH, CALENDAR_NEXT_MONTH } from 'components/Calendar/store/types';
+import { APPOINTMENT_EDITOR_SAVE } from 'components/AppointmentEditor/store/types';
+import { Appointment } from '../appointments/state';
 
 const initState: Time = {
   months: {},
@@ -11,7 +13,10 @@ const initState: Time = {
   days: {}
 };
 
-const createTimeEntitiesForMonth = (state: Time, datetime: moment.Moment): Time => {
+const createTimeEntitiesForMonth = (
+  state: Time,
+  datetime: moment.Moment,
+  appointments: Appointment[]): Time => {
   // Unfortunately Moment is a mutable library, so we need to be careful
   // and clone moments for mutable operations.
   const monthId = getMonthIdFromMoment(datetime);
@@ -59,7 +64,12 @@ const createTimeEntitiesForMonth = (state: Time, datetime: moment.Moment): Time 
       const newDay: Day = {
         dayId,
         monthId: getMonthIdFromMoment(weekDay),
-        appointmentsById: {},
+        appointmentsById: appointments.filter(appt => appt.daysById[dayId]).reduce(
+          (map, obj) => {
+            map[obj.appointmentId] = obj.appointmentId;
+            return map;
+          },
+          {}),
         moment: weekDay,
         dayOfMonth: weekDay.date()
       };
@@ -75,12 +85,41 @@ const createTimeEntitiesForMonth = (state: Time, datetime: moment.Moment): Time 
   return newState;
 };
 
+const updateDaysWithAppointment = (state: Time, appointment: Appointment): Time => {
+  const newState = { ...state };
+
+  const dayIds = Object.keys(appointment.daysById);
+
+  dayIds.forEach((dayId) => {
+    const dayObj = state.days[dayId];
+
+    // Add the new appointment id to the reference collection.
+    if (dayObj) {
+      newState.days[dayId] = {
+        ...dayObj,
+        appointmentsById: {
+          ...dayObj.appointmentsById,
+          [appointment.appointmentId]: appointment.appointmentId
+        },
+      };
+    }
+  });
+
+  return newState;
+};
+
 const reducer: Reducer<Time> = (state: Time = initState, action: AnyAction): Time => {
   switch (action.type) {
     case APP_INIT:
     case CALENDAR_PREVIOUS_MONTH:
     case CALENDAR_NEXT_MONTH:
-      return createTimeEntitiesForMonth(state, action.payload.month);
+      return createTimeEntitiesForMonth(
+        state,
+        action.payload.month,
+        action.payload.currentAppointments
+      );
+    case APPOINTMENT_EDITOR_SAVE:
+      return updateDaysWithAppointment(state, action.payload.newAppointment);
     default:
       return state;
   }

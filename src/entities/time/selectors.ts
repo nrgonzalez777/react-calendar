@@ -42,3 +42,9 @@ export const getDayOfMonth = (state: AppState, dayId: string): number =>
 
 export const getDayMonthId = (state: AppState, dayId: string): string =>
   getDayByIdOrDefault(state, dayId).monthId;
+
+export const getDayAppointmentIds = (state: AppState, dayId: string): {} =>
+  getDayByIdOrDefault(state, dayId).appointmentsById || {};
+
+export const getDayAppointmentIdsAsArray = (state: AppState, dayId: string): string[] =>
+  Object.keys(getDayAppointmentIds(state, dayId));

@@ -1,4 +1,4 @@
-import { getDayOfMonth, getDayMonthId } from 'entities/time/selectors';
+import { getDayOfMonth, getDayMonthId, getDayAppointmentIdsAsArray } from 'entities/time/selectors';
 import { AppState } from 'store/state';
 import {
   getCurrentDayId,
@@ -16,3 +16,6 @@ export const isSelectedDay = (state: AppState, dayId: string): boolean =>
 
 export const isDayInCurrentMonth = (state: AppState, dayId: string): boolean =>
   getDayMonthId(state, dayId) === getSelectedMonthId(state);
+
+export const hasAppointment = (state: AppState, dayId: string): boolean =>
+  getDayAppointmentIdsAsArray(state, dayId).length > 0;

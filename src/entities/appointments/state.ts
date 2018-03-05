@@ -5,6 +5,7 @@ export interface Appointment {
   title: string;
   start?: Moment;
   end?: Moment;
+  daysById: { [key: string]: string};
 }
 
 export interface AppointmentMap {

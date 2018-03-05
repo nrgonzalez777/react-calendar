@@ -25,6 +25,7 @@ const DayView = (props: DayProps) => {
         >
           {props.dayOfMonth}
         </div>
+        {props.hasAppointment ? <div className={styles.hasAppointment} /> : null}
     </div>
   );
 };

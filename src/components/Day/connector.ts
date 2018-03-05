@@ -6,13 +6,14 @@ import {
   getDisplayDate,
   isCurrentDay,
   isSelectedDay,
-  isDayInCurrentMonth
+  isDayInCurrentMonth,
+  hasAppointment
 } from './store/selectors';
 import { changeSelectedDay } from './store/actions';
 
 const mapStateToProps = (state: AppState, props: DayProps): DayConnectProps => ({
   dayOfMonth: getDisplayDate(state, props.dayId),
-  hasAppointment: false,
+  hasAppointment: hasAppointment(state, props.dayId),
   isCurrentDay: isCurrentDay(state, props.dayId),
   isSelectedDay: isSelectedDay(state, props.dayId),
   isDayOutOfSelectedMonth:  !isDayInCurrentMonth(state, props.dayId)

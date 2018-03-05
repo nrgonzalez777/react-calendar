@@ -11,10 +11,34 @@ import {
   APPOINTMENT_EDITOR_UPDATE_END
 } from './types';
 import { Appointment } from 'entities/appointments/state';
+import { getDayIdFromMoment } from 'helpers/timeHelpers';
 
 const initAppointment: Appointment = {
   appointmentId: '',
+  daysById: {},
   title: '',
+};
+
+const dayIdsFromTimePeriod = (start?: moment.Moment, end?: moment.Moment): {} => {
+  if (!start || !end) {
+    return {};
+  }
+
+  // setting days to midnight so that calculating how many days there are works.
+  const startDay = start.clone().startOf('day');
+  const endDay = end.clone().startOf('day');
+
+  const numDays = endDay.diff(startDay, 'day');
+
+  const newState = {};
+
+  for (let dayIndex = 0; dayIndex <= numDays; dayIndex += 1) {
+    const day = startDay.clone().add(dayIndex, 'day');
+    const dayId = getDayIdFromMoment(day);
+    newState[dayId] = dayId;
+  }
+
+  return newState;
 };
 
 const appointment = (state: Appointment = initAppointment, action: AnyAction): Appointment => {
@@ -24,9 +48,17 @@ const appointment = (state: Appointment = initAppointment, action: AnyAction): A
     case APPOINTMENT_EDITOR_UPDATE_TITLE:
       return { ...state, title: action.payload.title };
     case APPOINTMENT_EDITOR_UPDATE_START:
-      return { ...state, start: action.payload.start };
+      return {
+        ...state,
+        start: action.payload.start,
+        daysById: dayIdsFromTimePeriod(action.payload.start, state.end),
+      };
     case APPOINTMENT_EDITOR_UPDATE_END:
-      return { ...state, end: action.payload.end };
+      return {
+        ...state,
+        end: action.payload.end,
+        daysById: dayIdsFromTimePeriod(state.start, action.payload.end),
+      };
     default:
       return state;
   }
