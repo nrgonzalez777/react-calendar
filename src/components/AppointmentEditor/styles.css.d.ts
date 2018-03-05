@@ -7,3 +7,4 @@ export const close: string;
 export const form: string;
 export const datetime: string;
 export const save: string;
+export const error: string;

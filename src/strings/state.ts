@@ -2,6 +2,11 @@ export interface Strings {
   appointmentEditor: {
     placeholderTitle: string;
     saveLabel: string;
+    startInvalidError: string;
+    startPastError: string;
+    startGreaterError: string;
+    endInvalidError: string;
+    endPastError: string;
   };
   dayAbbr: {
     sunday: string;

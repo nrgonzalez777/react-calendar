@@ -62,7 +62,6 @@ label {
 .datetime {
   width: 75%;
   font-size: 14px;
-  margin-bottom: 10px;
   margin-right: 25%;
 }
 
@@ -85,4 +84,12 @@ label {
 
 .save:hover:disabled {
   transform: scale(1);
+}
+
+.error {
+  font-size: 12px;
+  height: 14px;
+  color: red;
+  margin-top: 5px;
+  margin-bottom: 15px;
 }

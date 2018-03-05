@@ -2,8 +2,13 @@ import { Strings } from './state';
 
 const en: Strings = {
   appointmentEditor: {
-    placeholderTitle: 'Enter title...',
+    placeholderTitle: 'Title required...',
     saveLabel: 'Save',
+    startInvalidError: 'Start time invalid',
+    startPastError: 'Start must be in the future',
+    startGreaterError: 'Start must be less than end',
+    endInvalidError: 'End time invalid',
+    endPastError: 'End must be in the future',
   },
   dayAbbr: {
     sunday: 'Su',

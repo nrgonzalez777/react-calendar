@@ -1,5 +1,6 @@
 import { Dispatch } from 'react-redux';
 import { AppState } from 'store/state';
+import moment from 'moment';
 
 import * as types from './types';
 import { getEditingAppointment } from './selectors';
@@ -17,6 +18,44 @@ export const updateTitle = (title: string) => ({
   error: false,
   metadata: {},
 });
+
+export const updateStart = (start: string) => (
+  dispatch: Dispatch<AppState>,
+  getState: () => AppState,
+) => {
+  const state = getState();
+  const end = getEditingAppointment(state).end;
+
+  dispatch({
+    type: types.APPOINTMENT_EDITOR_UPDATE_START,
+    payload: {
+      end,
+      now: moment(),
+      start: moment(start),
+    },
+    error: false,
+    metadata: {},
+  });
+};
+
+export const updateEnd = (end: string) => (
+  dispatch: Dispatch<AppState>,
+  getState: () => AppState,
+) => {
+  const state = getState();
+  const start = getEditingAppointment(state).start;
+
+  dispatch({
+    type: types.APPOINTMENT_EDITOR_UPDATE_END,
+    payload: {
+      start,
+      now: moment(),
+      end: moment(end)
+    },
+    error: false,
+    metadata: {},
+  });
+};
 
 export const saveAppointment = () => (
   dispatch: Dispatch<AppState>,
