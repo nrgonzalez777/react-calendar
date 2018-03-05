@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { AppState } from 'store/state';
-import { getAppointmentById } from 'entities/appointments/selectors';
+import { getAppointmentTitle } from 'entities/appointments/selectors';
 
 export const getState = (state: AppState) => state.components.appointmentEditor;
 
@@ -82,7 +82,7 @@ export const getEndErrorMessage = (state: AppState) => {
   if (validation.appointmentConflictId) {
     // TODO: integrate format library
     return strings.conflictErrorFormat
-    + getAppointmentById(state, validation.appointmentConflictId).title;
+    + getAppointmentTitle(state, validation.appointmentConflictId);
   }
 
   return '';

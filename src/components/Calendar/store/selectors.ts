@@ -1,7 +1,13 @@
 import { AppState } from 'store/state';
 import { Calendar } from './state';
-import { getMonthMoment, getMonthWeeksByOrder } from 'entities/time/selectors';
+import {
+  getMonthMoment,
+  getMonthWeeksByOrder,
+  getDayAppointmentIdsAsArray,
+  getDayById
+} from 'entities/time/selectors';
 import { Moment } from 'moment';
+import { Day } from 'entities/time/state';
 
 export const getState = (state: AppState): Calendar => state.components.calendar;
 
@@ -24,3 +30,9 @@ export const getCurrentDayId = (state: AppState): string =>
 
 export const getSelectedDayId = (state: AppState): string =>
   getState(state).selectedDayId;
+
+export const getSelectedDay = (state: AppState): Day =>
+  getDayById(state, getState(state).selectedDayId);
+
+export const getSelectedDayAppointments = (state: AppState): string[] =>
+  getDayAppointmentIdsAsArray(state, getState(state).selectedDayId);

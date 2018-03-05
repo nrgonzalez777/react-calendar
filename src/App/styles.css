@@ -4,8 +4,12 @@
     top: 0;
     right: 0;
     bottom: 0;
-    background-color: white;
+    background-color: rgba(209, 214, 221, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.innerContainer {
+    display: flex;
 }

@@ -6,6 +6,7 @@ import * as styles from './styles.css';
 import Calendar from '../components/Calendar';
 import AddAppointment from '../components/AddAppointment';
 import AppointmentEditor from '../components/AppointmentEditor';
+import DayBreakdown from 'components/DayBreakdown';
 
 class AppView extends React.Component<AppProps> {
 
@@ -16,7 +17,10 @@ class AppView extends React.Component<AppProps> {
   render() {
     return (
       <div className={styles.content}>
-        <Calendar />
+        <div className={styles.innerContainer}>
+          <Calendar />
+          <DayBreakdown />
+        </div>
         <AddAppointment />
         <AppointmentEditor />
       </div>

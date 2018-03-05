@@ -9,7 +9,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid  rgba(39, 46, 57, 0.5);
   cursor: pointer;
 }
 

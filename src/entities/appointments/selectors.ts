@@ -10,3 +10,9 @@ export const getAppointmentsArray = (state: AppState): Appointment[] => {
 
 export const getAppointmentById = (state: AppState, appointmentId: string): Appointment =>
   getState(state).byId[appointmentId];
+
+export const getAppointmentByIdOrDefault = (state: AppState, appointmentId: string): Appointment =>
+  getState(state).byId[appointmentId] || {};
+
+export const getAppointmentTitle = (state: AppState, appointmentId: string): string =>
+  getAppointmentByIdOrDefault(state, appointmentId).title;
