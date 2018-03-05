@@ -26,17 +26,17 @@
 * To add a new appointment, use the '+' button in the lower right hand corner of the screen to open the editor modal.
 * An appointment requires a title, a start time, and an end time.
 * The following time requirements are validated (red error text displays if invalid):
-** Start time and end time must be valid dates.
-** Start time and end time must be future dates.
-** Start time must be less than end time.
-** The range from start-end must not conflict with another appointment.
-** Note that validation errors may not appear until you enter in the full date first, as datetime-local pickers are a little weird in when they send a change event.
+    * Start time and end time must be valid dates.
+    * Start time and end time must be future dates.
+    * Start time must be less than end time.
+    * The range from start-end must not conflict with another appointment.
+    * Note that validation errors may not appear until you enter in the full date first, as datetime-local pickers are a little weird in when they send a change event.
 * Press the save button to store your appointment.
 * Going back to the calendar, you should observe that all days within your appointment range will now show with a small green circle. This indicates the days has at least one appointment.
 * Clicking on one of those days will populate the day view on the right side with your appointment data.
-** The selected day will also be displayed with a blue circle on the main calendar. 
-** Appointments are shown as rectangles that stretch from your start to end times.
-** If an appointment overlaps the day boundary, the rectangle will just stretch to the boundary edge.
+    * The selected day will also be displayed with a blue circle on the main calendar. 
+    * Appointments are shown as rectangles that stretch from your start to end times.
+    * If an appointment overlaps the day boundary, the rectangle will just stretch to the boundary edge.
 * Clicking on an appointment will open the editor and allow you to edit said appointment (validation rules still apply). 
 
 
