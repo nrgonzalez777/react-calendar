@@ -30,7 +30,11 @@ export const getHeightPercent = (state: AppState, appointmentId: string) => {
   const start = appointment.start.isAfter(selectedDay.moment)
     ? appointment.start : selectedDay.moment;
 
-  const minutesDiff = appointment.end.clone().diff(start, 'minutes');
+  // end point should be end of day if over
+  let end = selectedDay.moment.clone().add(1, 'day');
+  end = appointment.end.isBefore(end) ? appointment.end : end;
+
+  const minutesDiff = end.diff(start, 'minutes');
 
   // minutes per hour
   const heightPercent = minutesDiff / 1440;

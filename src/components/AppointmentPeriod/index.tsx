@@ -9,6 +9,7 @@ const DayBreakdownView = (props: AppointmentPeriodProps) => {
     <div
       className={styles.content}
       style={{ top: props.topOffsetPercent * (50 * 24), height: props.heightPercent * (50 * 24) }}
+      onClick={() => props.onAppointmentSelected(props.appointmentId)}
     >
      {props.title}
     </div>

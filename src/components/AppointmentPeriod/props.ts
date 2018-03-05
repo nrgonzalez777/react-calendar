@@ -8,5 +8,10 @@ export interface AppointmentPeriodConnectProps {
   heightPercent: number;
 }
 
+export interface AppointmentPeriodOutputProps {
+  onAppointmentSelected: (appointmentId: string) => void;
+}
+
 export interface AppointmentPeriodProps
-  extends AppointmentPeriodInputProps, AppointmentPeriodConnectProps {}
+  extends AppointmentPeriodInputProps,
+  AppointmentPeriodConnectProps, AppointmentPeriodOutputProps {}

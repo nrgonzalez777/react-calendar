@@ -1,13 +1,15 @@
-import { connect } from 'react-redux';
+import { connect, Dispatch } from 'react-redux';
 import { AppState } from 'store/state';
 
 import {
   AppointmentPeriodInputProps,
   AppointmentPeriodConnectProps,
+  AppointmentPeriodOutputProps,
   AppointmentPeriodProps
 } from './props';
 import { getAppointmentTitle } from 'entities/appointments/selectors';
 import { getTopOffsetPercent, getHeightPercent } from './store/selectors';
+import { appointmentSelected } from './store/actions';
 
 const mapStateToProps = (
   state: AppState,
@@ -17,5 +19,10 @@ const mapStateToProps = (
     heightPercent: getHeightPercent(state, props.appointmentId),
   });
 
-export default connect<AppointmentPeriodConnectProps, {}, AppointmentPeriodInputProps>
-  (mapStateToProps);
+const mapDispatchToProps = (dispatch: Dispatch<AppState>): AppointmentPeriodOutputProps => ({
+  onAppointmentSelected: (appointmentId: string) => dispatch(appointmentSelected(appointmentId)),
+});
+
+export default connect<AppointmentPeriodConnectProps,
+  AppointmentPeriodOutputProps, AppointmentPeriodInputProps>
+  (mapStateToProps, mapDispatchToProps);

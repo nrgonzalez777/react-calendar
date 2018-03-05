@@ -12,6 +12,7 @@ import {
 } from './types';
 import { Appointment } from 'entities/appointments/state';
 import { getDayIdFromMoment } from 'helpers/timeHelpers';
+import { APPOINTMENT_PERIOD_SELECTED } from '../../AppointmentPeriod/store/types';
 
 const initAppointment: Appointment = {
   appointmentId: '',
@@ -45,6 +46,8 @@ const appointment = (state: Appointment = initAppointment, action: AnyAction): A
   switch (action.type) {
     case ADD_APPOINTMENT:
       return { ...initAppointment, appointmentId: uuid() };
+    case APPOINTMENT_PERIOD_SELECTED:
+      return { ...action.payload.appointment };
     case APPOINTMENT_EDITOR_UPDATE_TITLE:
       return { ...state, title: action.payload.title };
     case APPOINTMENT_EDITOR_UPDATE_START:
@@ -67,6 +70,7 @@ const appointment = (state: Appointment = initAppointment, action: AnyAction): A
 const isVisible = (state: boolean = false, action: AnyAction): boolean => {
   switch (action.type) {
     case ADD_APPOINTMENT:
+    case APPOINTMENT_PERIOD_SELECTED:
       return true;
     case APPOINTMENT_EDITOR_CLOSE:
     case APPOINTMENT_EDITOR_SAVE:
@@ -148,6 +152,11 @@ const validation = (state: Validation = initValidation, action: AnyAction): Vali
   switch (action.type) {
     case ADD_APPOINTMENT:
       return { ...initValidation };
+    case APPOINTMENT_PERIOD_SELECTED:
+      let newState = { ...initValidation, isTitleValid: !!action.payload.appointment.title };
+      newState = validateStart(newState, action);
+      newState = validateEnd(newState, action);
+      return newState;
     case APPOINTMENT_EDITOR_UPDATE_TITLE:
       return { ...state, isTitleValid: !!action.payload.title };
     case APPOINTMENT_EDITOR_UPDATE_START:
