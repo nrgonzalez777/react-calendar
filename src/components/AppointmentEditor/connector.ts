@@ -1,7 +1,7 @@
 import { connect, Dispatch } from 'react-redux';
 import { AppState } from 'store/state';
 
-import { AppointmentEditorConnectProps, AppointmentEditorDispatchProps } from './props';
+import { AppointmentEditorViewInputProps, AppointmentEditorViewOutputProps } from './view';
 import {
   closeEditor,
   updateTitle,
@@ -21,7 +21,7 @@ import {
   getEndErrorMessage,
 } from './store/selectors';
 
-const mapStateToProps = (state: AppState): AppointmentEditorConnectProps => ({
+const mapStateToProps = (state: AppState): AppointmentEditorViewInputProps => ({
   isDisabled: !isValid(state),
   isVisible: isVisible(state),
   appointmentTitle: getEditingAppointmentTitle(state),
@@ -34,7 +34,7 @@ const mapStateToProps = (state: AppState): AppointmentEditorConnectProps => ({
   deleteLabel: getStrings(state).deleteLabel,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AppState>): AppointmentEditorDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<AppState>): AppointmentEditorViewOutputProps => ({
   onCloseSelected: () => dispatch(closeEditor()),
   onUpdateTitle: (title: string) => dispatch(updateTitle(title)),
   onUpdateStart: (start: string) => dispatch(updateStart(start)),

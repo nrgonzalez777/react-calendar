@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { AppState } from 'store/state';
 
-import { DayAbbreviationsProps } from './props';
 import { getDayAbbreviations } from './store/selectors';
+import { DayAbbreviationsViewProps } from './view';
 
-const mapStateToProps = (state: AppState): DayAbbreviationsProps => ({
+const mapStateToProps = (state: AppState): DayAbbreviationsViewProps => ({
   abbreviations: getDayAbbreviations(state),
 });
 
