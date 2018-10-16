@@ -2,8 +2,8 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { AppState } from 'store/state';
 
-import { Hour, DayBreakdownConnectProps } from './props';
 import { getSelectedDayAppointments } from '../Calendar/store/selectors';
+import { Hour, DayBreakdownViewProps } from './view';
 
 // TODO: not proud of this, but it is getting late.
 const createHours = (): Hour[] => {
@@ -18,11 +18,9 @@ const createHours = (): Hour[] => {
   return hours;
 };
 
-const mapStateToProps = (state: AppState): DayBreakdownConnectProps => ({
+const mapStateToProps = (state: AppState): DayBreakdownViewProps => ({
   appointmentIds: getSelectedDayAppointments(state),
   hours: createHours(),
 });
 
-// this means that we are typed with DayConnectProps for the connect,
-// but parent components will only see input props
 export default connect(mapStateToProps);

@@ -164,15 +164,6 @@ module.exports = {
             use: [
               require.resolve('style-loader'),
               {
-                loader: require.resolve('typings-for-css-modules-loader'),
-                options: {
-                  camelCase : true,
-                  modules: true,
-                  namedExport: true,
-                  localIdentName: "[name]__[local]___[hash:base64:5]"
-                },
-              },
-              {
                 loader: require.resolve('postcss-loader'),
                 options: {
                   // Necessary for external CSS imports to work
