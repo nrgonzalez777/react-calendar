@@ -1,8 +1,9 @@
 import { combineReducers, AnyAction, Reducer } from 'redux';
 import moment from 'moment';
 import uuid from 'uuid';
-import { AppointmentEditor, Validation } from './state';
-import { ADD_APPOINTMENT } from '../../AddAppointment/store/types';
+
+import { ADD_APPOINTMENT } from 'components/AddAppointment/store/types';
+import { DAY_BREAKDOWN_APPOINTMENT_SELECTED } from 'components/DayBreakdown/store/types';
 import {
   APPOINTMENT_EDITOR_CLOSE,
   APPOINTMENT_EDITOR_UPDATE_TITLE,
@@ -11,17 +12,22 @@ import {
   APPOINTMENT_EDITOR_UPDATE_END,
   APPOINTMENT_EDITOR_DELETE
 } from './types';
+
 import { Appointment } from 'entities/appointments/state';
+import { AppointmentEditor, Validation } from './state';
+
 import { getDayIdFromMoment } from 'helpers/timeHelpers';
-import { APPOINTMENT_PERIOD_SELECTED } from '../../AppointmentPeriod/store/types';
 
 const initAppointment: Appointment = {
   appointmentId: '',
   daysById: {},
-  title: '',
+  title: ''
 };
 
-const dayIdsFromTimePeriod = (start?: moment.Moment, end?: moment.Moment): {} => {
+const dayIdsFromTimePeriod = (
+  start?: moment.Moment,
+  end?: moment.Moment
+): {} => {
   if (!start || !end) {
     return {};
   }
@@ -43,11 +49,14 @@ const dayIdsFromTimePeriod = (start?: moment.Moment, end?: moment.Moment): {} =>
   return newState;
 };
 
-const appointment = (state: Appointment = initAppointment, action: AnyAction): Appointment => {
+const appointment = (
+  state: Appointment = initAppointment,
+  action: AnyAction
+): Appointment => {
   switch (action.type) {
     case ADD_APPOINTMENT:
       return { ...initAppointment, appointmentId: uuid() };
-    case APPOINTMENT_PERIOD_SELECTED:
+    case DAY_BREAKDOWN_APPOINTMENT_SELECTED:
       return { ...action.payload.appointment };
     case APPOINTMENT_EDITOR_UPDATE_TITLE:
       return { ...state, title: action.payload.title };
@@ -55,13 +64,13 @@ const appointment = (state: Appointment = initAppointment, action: AnyAction): A
       return {
         ...state,
         start: action.payload.start,
-        daysById: dayIdsFromTimePeriod(action.payload.start, state.end),
+        daysById: dayIdsFromTimePeriod(action.payload.start, state.end)
       };
     case APPOINTMENT_EDITOR_UPDATE_END:
       return {
         ...state,
         end: action.payload.end,
-        daysById: dayIdsFromTimePeriod(state.start, action.payload.end),
+        daysById: dayIdsFromTimePeriod(state.start, action.payload.end)
       };
     default:
       return state;
@@ -71,7 +80,7 @@ const appointment = (state: Appointment = initAppointment, action: AnyAction): A
 const isVisible = (state: boolean = false, action: AnyAction): boolean => {
   switch (action.type) {
     case ADD_APPOINTMENT:
-    case APPOINTMENT_PERIOD_SELECTED:
+    case DAY_BREAKDOWN_APPOINTMENT_SELECTED:
       return true;
     case APPOINTMENT_EDITOR_CLOSE:
     case APPOINTMENT_EDITOR_SAVE:
@@ -91,13 +100,14 @@ const initValidation: Validation = {
   isStartLessThanEnd: false,
   isEndValid: false,
   isEndInTheFuture: false,
-  isTitleValid: false,
+  isTitleValid: false
 };
 
 const findAppointmentConflictId = (
   start: moment.Moment,
   end: moment.Moment,
-  appointments: Appointment[]): string => {
+  appointments: Appointment[]
+): string => {
   if (!start || !end || !appointments) {
     return '';
   }
@@ -105,13 +115,15 @@ const findAppointmentConflictId = (
   // to figure out whether there is a conflict. We shouldn't have enough appts for this
   // to matter right now.
   // return appointments ?  : null;
-  const conflict = appointments.find((appt) => {
+  const conflict = appointments.find(appt => {
     if (!appt.start || !appt.end) {
       return false;
     }
-    return (start.isAfter(appt.start) && start.isBefore(appt.end))
-            || (end.isAfter(appt.start) && end.isBefore(appt.end))
-            || (start.isBefore(appt.start) && end.isAfter(appt.end));
+    return (
+      (start.isAfter(appt.start) && start.isBefore(appt.end)) ||
+      (end.isAfter(appt.start) && end.isBefore(appt.end)) ||
+      (start.isBefore(appt.start) && end.isAfter(appt.end))
+    );
   });
 
   return conflict ? conflict.appointmentId : '';
@@ -125,11 +137,15 @@ const validateStart = (state: Validation, action: AnyAction) => {
 
   return {
     ...state,
-    appointmentConflictId: findAppointmentConflictId(start, end, currentAppointments),
+    appointmentConflictId: findAppointmentConflictId(
+      start,
+      end,
+      currentAppointments
+    ),
     hasSetStart: true,
     isStartValid: start.isValid(),
     isStartInTheFuture: start.isAfter(now),
-    isStartLessThanEnd: end ? end.isAfter(start) : true,
+    isStartLessThanEnd: end ? end.isAfter(start) : true
   };
 };
 
@@ -141,21 +157,30 @@ const validateEnd = (state: Validation, action: AnyAction) => {
 
   return {
     ...state,
-    appointmentConflictId: findAppointmentConflictId(start, end, currentAppointments),
+    appointmentConflictId: findAppointmentConflictId(
+      start,
+      end,
+      currentAppointments
+    ),
     hasSetEnd: true,
     isEndValid: end.isValid(),
     isEndInTheFuture: end.isAfter(now),
-    isStartLessThanEnd: end ? end.isAfter(start) : true,
+    isStartLessThanEnd: end ? end.isAfter(start) : true
   };
 };
 
-const validation = (state: Validation = initValidation, action: AnyAction): Validation => {
-
+const validation = (
+  state: Validation = initValidation,
+  action: AnyAction
+): Validation => {
   switch (action.type) {
     case ADD_APPOINTMENT:
       return { ...initValidation };
-    case APPOINTMENT_PERIOD_SELECTED:
-      let newState = { ...initValidation, isTitleValid: !!action.payload.appointment.title };
+    case DAY_BREAKDOWN_APPOINTMENT_SELECTED:
+      let newState = {
+        ...initValidation,
+        isTitleValid: !!action.payload.appointment.title
+      };
       newState = validateStart(newState, action);
       newState = validateEnd(newState, action);
       return newState;
@@ -173,7 +198,7 @@ const validation = (state: Validation = initValidation, action: AnyAction): Vali
 const reducer: Reducer<AppointmentEditor> = combineReducers({
   appointment,
   isVisible,
-  validation,
+  validation
 });
 
 export default reducer;
