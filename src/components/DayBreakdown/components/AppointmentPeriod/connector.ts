@@ -10,9 +10,9 @@ import {
   AppointmentPeriodViewOutputProps
 } from './view';
 
-export interface AppointmentPeriodViewOwnProps {
+export type AppointmentPeriodViewOwnProps = {
   appointmentId: string;
-}
+};
 
 const mapStateToProps = (
   state: AppState,

@@ -3,15 +3,15 @@ import { StyleSheet, css } from 'aphrodite';
 
 import Plus from 'resources/icons/Plus';
 
-export interface AddAppointmentViewProps {
+export type AddAppointmentViewProps = {
   onAddAppointment: () => void;
-}
+};
 
 const AddAppointmentView = (props: AddAppointmentViewProps) => (
-    <div className={css(styles.content)} onClick={props.onAddAppointment}>
-      <Plus />
-    </div>
-  );
+  <div className={css(styles.content)} onClick={props.onAddAppointment}>
+    <Plus />
+  </div>
+);
 
 const styles = StyleSheet.create({
   content: {
@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     cursor: 'pointer',
     ':hover': {
-      transform: 'scale(1.1)',
+      transform: 'scale(1.1)'
     }
-  },
+  }
 });
 
 export default AddAppointmentView;

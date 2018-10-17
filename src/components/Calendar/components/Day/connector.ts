@@ -12,9 +12,9 @@ import { changeSelectedDay } from '../../store/actions';
 
 import { DayViewInputProps, DayViewOutputProps } from './view';
 
-export interface DayViewOwnProps {
+export type DayViewOwnProps = {
   dayId: string;
-}
+};
 
 const mapStateToProps = (
   state: AppState,

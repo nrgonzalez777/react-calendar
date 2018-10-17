@@ -6,12 +6,11 @@ import AddAppointment from '../components/AddAppointment';
 import AppointmentEditor from '../components/AppointmentEditor';
 import DayBreakdown from 'components/DayBreakdown';
 
-export interface AppProps {
+export type AppProps = {
   onAppInitialized: () => void;
-}
+};
 
 class AppView extends React.Component<AppProps> {
-
   componentDidMount() {
     this.props.onAppInitialized();
   }
@@ -40,11 +39,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(209, 214, 221, 0.5)',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   innerContainer: {
-    display: 'flex',
-  },
+    display: 'flex'
+  }
 });
 
 export default AppView;

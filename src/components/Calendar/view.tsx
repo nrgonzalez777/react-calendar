@@ -5,19 +5,18 @@ import Chevron from '../common/Chevron';
 import DayAbbreviations from './components/DayAbbreviations';
 import Week from './components/Week';
 
-export interface CalendarViewInputProps {
+export type CalendarViewInputProps = {
   monthName: string;
   weekIds: string[];
-}
+};
 
-export interface CalendarViewOutputProps {
+export type CalendarViewOutputProps = {
   onPreviousMonthSelected: () => void;
   onNextMonthSelected: () => void;
-}
+};
 
-export interface CalendarViewProps
-  extends CalendarViewInputProps,
-    CalendarViewOutputProps {}
+export type CalendarViewProps = CalendarViewInputProps &
+  CalendarViewOutputProps;
 
 const CalendarView = (props: CalendarViewProps) => (
   <div className={css(styles.content)}>

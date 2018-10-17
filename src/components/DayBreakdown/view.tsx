@@ -3,15 +3,15 @@ import { StyleSheet, css } from 'aphrodite';
 
 import AppointmentPeriod from './components/AppointmentPeriod';
 
-export interface DayBreakdownViewProps {
+export type DayBreakdownViewProps = {
   appointmentIds: string[];
   hours: Hour[];
-}
+};
 
-export interface Hour {
+export type Hour = {
   index: number;
   title: string;
-}
+};
 
 const DayBreakdownView = (props: DayBreakdownViewProps) => {
   return (

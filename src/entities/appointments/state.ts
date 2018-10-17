@@ -1,17 +1,17 @@
 import { Moment } from 'moment';
 
-export interface Appointment {
+export type Appointment = {
   appointmentId: string;
   title: string;
   start?: Moment;
   end?: Moment;
-  daysById: { [key: string]: string};
-}
+  daysById: { [key: string]: string };
+};
 
-export interface AppointmentMap {
+export type AppointmentMap = {
   [key: string]: Appointment;
-}
+};
 
-export interface Appointments {
+export type Appointments = {
   byId: AppointmentMap;
-}
+};

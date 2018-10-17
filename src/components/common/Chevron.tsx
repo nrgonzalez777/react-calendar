@@ -1,18 +1,16 @@
 import * as React from 'react';
 import { css, StyleSheet } from 'aphrodite';
 
-export interface ChevronViewInputProps {
+export type ChevronViewInputProps = {
   direction: 'left' | 'right' | 'top' | 'bottom';
   color: string;
-}
+};
 
-export interface ChevronViewOutputProps {
+export type ChevronViewOutputProps = {
   onClick: () => void;
-}
+};
 
-export interface ChevronViewProps
-  extends ChevronViewInputProps,
-    ChevronViewOutputProps {}
+export type ChevronViewProps = ChevronViewInputProps & ChevronViewOutputProps;
 
 const ChevronView = (props: ChevronViewProps) => (
   <div
