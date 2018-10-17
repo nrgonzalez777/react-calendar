@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
+import colors from 'constants/colors';
+
 export type AppointmentPeriodViewInputProps = {
   appointmentId: string;
   title: string;
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: '60px',
     right: '15px',
-    backgroundColor: '#00add7',
+    backgroundColor: colors.PRIMARY,
     color: 'white',
     borderRadius: '5px',
     paddingTop: '5px',

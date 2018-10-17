@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
+import colors from 'constants/colors';
+
 import Calendar from '../components/Calendar';
 import AddAppointment from '../components/AddAppointment';
 import AppointmentEditor from '../components/AppointmentEditor';
@@ -36,7 +38,7 @@ const styles = StyleSheet.create({
     top: '0',
     right: '0',
     bottom: '0',
-    backgroundColor: 'rgba(209, 214, 221, 0.5)',
+    backgroundColor: colors.BACKGROUND_GRAY,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'

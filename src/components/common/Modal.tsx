@@ -4,6 +4,7 @@ import { css, StyleSheet } from 'aphrodite';
 import BackgroundOverlay from './BackgroundOverlay';
 import Button from 'components/common/Button';
 import CloseButton from 'components/common/CloseButton';
+import colors from 'constants/colors';
 
 export type ModalViewInputProps = {
   children: {
@@ -53,7 +54,7 @@ const ModalView = (props: ModalViewProps) => {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: 'white',
+    backgroundColor: colors.WHITE,
     display: 'flex',
     flexDirection: 'column',
     minWidth: '300px'
@@ -64,12 +65,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '40px',
-    backgroundColor: '#00add7',
+    backgroundColor: colors.PRIMARY,
     paddingLeft: '15px',
     paddingRight: '15px'
   },
   defaultHeaderText: {
-    color: 'white'
+    color: colors.WHITE
   },
   content: {
     padding: '15px',

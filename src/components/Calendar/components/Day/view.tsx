@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
+import colors from 'constants/colors';
+
 export type DayViewInputProps = {
   dayId: string;
   dayOfMonth: number;
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
     height: '100px'
   },
   dayOutOfMonth: {
-    backgroundColor: 'rgba(209, 214, 221, 0.5)'
+    backgroundColor: colors.BACKGROUND_GRAY
   },
   day: {
     color: 'black',
@@ -67,14 +69,14 @@ const styles = StyleSheet.create({
     }
   },
   dayCurrent: {
-    color: '#00add7'
+    color: colors.PRIMARY
   },
   daySelected: {
-    color: 'white',
-    backgroundColor: '#00add7',
+    color: colors.WHITE,
+    backgroundColor: colors.PRIMARY,
     ':hover': {
-      color: 'white',
-      backgroundColor: '#00add7'
+      color: colors.WHITE,
+      backgroundColor: colors.PRIMARY
     }
   },
   hasAppointment: {

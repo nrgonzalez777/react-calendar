@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
+import colors from 'constants/colors';
+
 import AppointmentPeriod from './components/AppointmentPeriod';
 
 export type DayBreakdownViewProps = {
@@ -35,15 +37,15 @@ const styles = StyleSheet.create({
     height: '621px',
     marginLeft: '50px',
     overflowY: 'auto',
-    backgroundColor: 'white',
-    border: '1px solid rgba(39, 46, 57, 0.5)',
+    backgroundColor: colors.WHITE,
+    border: `1px solid ${colors.BORDER_GRAY}`,
     borderTop: 1
   },
   hour: {
     width: '100%',
     height: '50px',
     paddingLeft: '8px',
-    borderTop: '1px solid rgba(39, 46, 57, 0.5)'
+    borderTop: `1px solid ${colors.BORDER_GRAY}`
   }
 });
 

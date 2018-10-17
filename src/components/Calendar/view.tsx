@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
+import colors from 'constants/colors';
+
 import Chevron from '../common/Chevron';
 import DayAbbreviations from './components/DayAbbreviations';
 import Week from './components/Week';
@@ -47,8 +49,8 @@ const styles = StyleSheet.create({
     width: '700px',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#00add7',
-    color: 'white'
+    backgroundColor: colors.PRIMARY,
+    color: colors.WHITE
   },
   header: {
     width: '100%',
@@ -71,10 +73,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     flex: '1 0 auto',
-    backgroundColor: 'white',
-    borderLeft: '1px solid rgba(39, 46, 57, 0.5)',
-    borderRight: '1px solid rgba(39, 46, 57, 0.5)',
-    borderBottom: '1px solid rgba(39, 46, 57, 0.5)'
+    backgroundColor: colors.WHITE,
+    borderLeft: `1px solid ${colors.BORDER_GRAY}`,
+    borderRight: `1px solid ${colors.BORDER_GRAY}`,
+    borderBottom: `1px solid ${colors.BORDER_GRAY}`
   }
 });
 

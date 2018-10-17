@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { css, StyleSheet, StyleDeclarationValue } from 'aphrodite';
+import colors from 'constants/colors';
 
 export type ButtonViewInputProps = {
   classes?: StyleDeclarationValue[];
@@ -25,12 +26,12 @@ const ButtonView = (props: ButtonViewProps) => (
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#00add7',
+    backgroundColor: colors.PRIMARY,
     color: 'white',
     padding: '5px 10px',
     cursor: 'pointer',
     ':disabled': {
-      backgroundColor: 'rgba(209, 214, 221, 0.5)',
+      backgroundColor: colors.BACKGROUND_GRAY,
       cursor: 'default'
     },
     ':hover': {
