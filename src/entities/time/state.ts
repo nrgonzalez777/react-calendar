@@ -1,39 +1,39 @@
 import { Moment } from 'moment';
 
-export interface Month {
+export type Month = {
   monthId: string;
   monthNumber: number;
   weeksByOrder: string[];
   moment: Moment;
-}
+};
 
-export interface MonthMap {
+export type MonthMap = {
   [key: string]: Month;
-}
+};
 
-export interface Week {
+export type Week = {
   weekId: string;
   daysByOrder: string[];
-}
+};
 
-export interface WeekMap {
+export type WeekMap = {
   [key: string]: Week;
-}
+};
 
-export interface Day {
+export type Day = {
   dayId: string;
   monthId: string;
-  appointmentsById: { [key: string]: string};
+  appointmentsById: { [key: string]: string };
   moment: Moment;
   dayOfMonth: number;
-}
+};
 
-export interface DayMap {
+export type DayMap = {
   [key: string]: Day;
-}
+};
 
-export interface Time {
+export type Time = {
   months: MonthMap;
   weeks: WeekMap;
   days: DayMap;
-}
+};

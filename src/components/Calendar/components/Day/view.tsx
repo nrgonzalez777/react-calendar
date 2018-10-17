@@ -1,36 +1,42 @@
 import * as React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
-export interface DayViewInputProps {
+export type DayViewInputProps = {
   dayId: string;
   dayOfMonth: number;
   hasAppointment: boolean;
   isCurrentDay: boolean;
   isSelectedDay: boolean;
   isDayOutOfSelectedMonth: boolean;
-}
+};
 
-export interface DayViewOutputProps {
+export type DayViewOutputProps = {
   onDaySelected: (dayId: string) => void;
-}
+};
 
-export interface DayProps extends DayViewInputProps, DayViewOutputProps {}
+export type DayProps = DayViewInputProps & DayViewOutputProps;
 
 const DayView = (props: DayProps) => {
   return (
     <div
-      className={css(styles.content, props.isDayOutOfSelectedMonth ? styles.dayOutOfMonth : null)}
+      className={css(
+        styles.content,
+        props.isDayOutOfSelectedMonth ? styles.dayOutOfMonth : null
+      )}
     >
       <div
-        className={
-          css(styles.day,
-              props.isCurrentDay ? styles.dayCurrent : null,
-              props.isSelectedDay ? styles.daySelected : null)}
+        className={css(
+          styles.day,
+          props.isCurrentDay ? styles.dayCurrent : null,
+          props.isSelectedDay ? styles.daySelected : null
+        )}
         onClick={() => props.onDaySelected(props.dayId)}
       >
         {props.dayOfMonth}
       </div>
-      {props.hasAppointment ? <div className={css(styles.hasAppointment)} /> : null}
+      {props.hasAppointment ? (
+        <div className={css(styles.hasAppointment)} />
+      ) : null}
     </div>
   );
 };
@@ -42,10 +48,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: '1 0 100px',
-    height: '100px',
+    height: '100px'
   },
   dayOutOfMonth: {
-    backgroundColor:  'rgba(209, 214, 221, 0.5)',
+    backgroundColor: 'rgba(209, 214, 221, 0.5)'
   },
   day: {
     color: 'black',
@@ -57,19 +63,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     ':hover': {
       cursor: 'pointer',
-      backgroundColor: 'rgba(39, 46, 57, 0.1)',
+      backgroundColor: 'rgba(39, 46, 57, 0.1)'
     }
   },
   dayCurrent: {
-    color: '#00add7',
+    color: '#00add7'
   },
   daySelected: {
     color: 'white',
     backgroundColor: '#00add7',
     ':hover': {
       color: 'white',
-      backgroundColor: '#00add7',
-    },
+      backgroundColor: '#00add7'
+    }
   },
   hasAppointment: {
     position: 'absolute',
@@ -77,8 +83,8 @@ const styles = StyleSheet.create({
     height: '10px',
     borderRadius: '50%',
     bottom: '25%',
-    backgroundColor: '#3fd83f',
-  },
+    backgroundColor: '#3fd83f'
+  }
 });
 
 export default DayView;

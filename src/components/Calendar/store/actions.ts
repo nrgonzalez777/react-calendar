@@ -1,13 +1,21 @@
-
 import { Dispatch } from 'react-redux';
 import * as types from './types';
 import { getSelectedMonthMoment } from './selectors';
 import { AppState } from 'store/state';
 import { getAppointmentsArray } from 'entities/appointments/selectors';
 
+export const changeSelectedDay = (dayId: string) => ({
+  type: types.CALENDAR_DAY_SELECTED,
+  payload: {
+    dayId
+  },
+  error: false,
+  metadata: {}
+});
+
 export const goToPreviousMonth = () => (
-    dispatch: Dispatch<AppState>,
-    getState: () => AppState
+  dispatch: Dispatch<AppState>,
+  getState: () => AppState
 ) => {
   const state = getState();
   const selectedMonth = getSelectedMonthMoment(state);
@@ -20,13 +28,13 @@ export const goToPreviousMonth = () => (
       month: selectedMonth.clone().subtract(1, 'month')
     },
     error: false,
-    metadata: {},
+    metadata: {}
   });
 };
 
 export const goToNextMonth = () => (
-    dispatch: Dispatch<AppState>,
-    getState: () => AppState
+  dispatch: Dispatch<AppState>,
+  getState: () => AppState
 ) => {
   const state = getState();
   const selectedMonth = getSelectedMonthMoment(state);
@@ -39,6 +47,6 @@ export const goToNextMonth = () => (
       month: selectedMonth.clone().add(1, 'month')
     },
     error: false,
-    metadata: {},
+    metadata: {}
   });
 };

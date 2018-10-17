@@ -7,20 +7,20 @@ import { getAppointmentById } from 'entities/appointments/selectors';
 
 export const appointmentSelected = (appointmentId: string) => (
   dispatch: Dispatch<AppState>,
-  getState: () => AppState,
+  getState: () => AppState
 ) => {
   const state = getState();
   const appointment = getAppointmentById(state, appointmentId);
 
   dispatch({
-    type: types.APPOINTMENT_PERIOD_SELECTED,
+    type: types.DAY_BREAKDOWN_APPOINTMENT_SELECTED,
     payload: {
       appointment,
       start: appointment.start,
       end: appointment.end,
-      now: moment(),
+      now: moment()
     },
     error: false,
-    metadata: {},
+    metadata: {}
   });
 };
