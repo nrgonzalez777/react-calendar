@@ -22,7 +22,7 @@ const createHours = (): Hour[] => {
 };
 
 const mapStateToProps = (state: AppState): DayBreakdownViewProps => ({
-  appointmentIds: calendarSelectors.getSelectedDayAppointments(state),
+  appointmentIds: calendarSelectors.getSelectedDayAppointmentIds(state),
   hours: createHours()
 });
 

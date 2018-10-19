@@ -5,7 +5,7 @@ export type Appointment = {
   title: string;
   start?: Moment;
   end?: Moment;
-  daysById: { [key: string]: string };
+  dayIds: string[];
 };
 
 export type AppointmentMap = {

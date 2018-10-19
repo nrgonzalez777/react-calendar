@@ -1,7 +1,6 @@
 import { Dispatch } from 'react-redux';
 
 import { AppState } from 'store/state';
-import { appointmentSelectors } from 'entities/appointments';
 
 import selectors from './selectors';
 import types from './types';
@@ -19,12 +18,10 @@ const goToPreviousMonth = () => (
 ) => {
   const state = getState();
   const selectedMonth = selectors.getSelectedMonthMoment(state);
-  const currentAppointments = appointmentSelectors.getAppointmentsArray(state);
 
   dispatch({
     type: types.CALENDAR_PREVIOUS_MONTH,
     payload: {
-      currentAppointments,
       month: selectedMonth.clone().subtract(1, 'month')
     }
   });
@@ -36,12 +33,10 @@ const goToNextMonth = () => (
 ) => {
   const state = getState();
   const selectedMonth = selectors.getSelectedMonthMoment(state);
-  const currentAppointments = appointmentSelectors.getAppointmentsArray(state);
 
   dispatch({
     type: types.CALENDAR_NEXT_MONTH,
     payload: {
-      currentAppointments,
       month: selectedMonth.clone().add(1, 'month')
     }
   });

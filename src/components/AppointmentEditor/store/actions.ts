@@ -80,8 +80,7 @@ const deleteAppointment = () => (
   dispatch({
     type: types.APPOINTMENT_EDITOR_DELETE,
     payload: {
-      appointmentId: appointment.appointmentId,
-      dayIds: appointment.daysById
+      appointmentId: appointment.appointmentId
     }
   });
 };

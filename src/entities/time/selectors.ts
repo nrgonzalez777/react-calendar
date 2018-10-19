@@ -43,14 +43,6 @@ const getDayOfMonth = (state: AppState, dayId: string): number =>
 const getDayMonthId = (state: AppState, dayId: string): string =>
   getDayByIdOrDefault(state, dayId).monthId;
 
-const getDayAppointmentIds = (state: AppState, dayId: string): {} =>
-  getDayByIdOrDefault(state, dayId).appointmentsById || {};
-
-const getDayAppointmentIdsAsArray = (
-  state: AppState,
-  dayId: string
-): string[] => Object.keys(getDayAppointmentIds(state, dayId));
-
 export default {
   getMonthById,
   getMonthByIdOrDefault,
@@ -64,7 +56,5 @@ export default {
   getDayByIdOrDefault,
   getDayMoment,
   getDayOfMonth,
-  getDayMonthId,
-  getDayAppointmentIds,
-  getDayAppointmentIdsAsArray
+  getDayMonthId
 };

@@ -2,6 +2,7 @@ import { Moment } from 'moment';
 
 import { AppState } from 'store/state';
 import { Calendar } from './state';
+import { appointmentsByDaySelectors } from 'entities/appointmentsByDay';
 import { timeSelectors } from 'entities/time/';
 import { getStrings } from 'strings/selectors';
 import { Day } from 'entities/time/state';
@@ -31,8 +32,8 @@ const getSelectedDayId = (state: AppState): string =>
 const getSelectedDay = (state: AppState): Day =>
   timeSelectors.getDayById(state, getState(state).selectedDayId);
 
-const getSelectedDayAppointments = (state: AppState): string[] =>
-  timeSelectors.getDayAppointmentIdsAsArray(
+const getSelectedDayAppointmentIds = (state: AppState): string[] =>
+  appointmentsByDaySelectors.getDayAppointmentIds(
     state,
     getState(state).selectedDayId
   );
@@ -49,7 +50,7 @@ const getIsDayInCurrentMonth = (state: AppState, dayId: string): boolean =>
   timeSelectors.getDayMonthId(state, dayId) === getSelectedMonthId(state);
 
 const getHasAppointment = (state: AppState, dayId: string): boolean =>
-  timeSelectors.getDayAppointmentIdsAsArray(state, dayId).length > 0;
+  appointmentsByDaySelectors.getDayAppointmentIds(state, dayId).length > 0;
 
 const getDayAbbreviations = (state: AppState): string[] => {
   const abbrs = getStrings(state).dayAbbr;
@@ -72,7 +73,7 @@ export default {
   getCurrentDayId,
   getSelectedDayId,
   getSelectedDay,
-  getSelectedDayAppointments,
+  getSelectedDayAppointmentIds,
   getDayDisplayDate,
   getIsCurrentDay,
   getIsSelectedDay,

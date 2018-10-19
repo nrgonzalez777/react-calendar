@@ -14,33 +14,31 @@ import { getDayIdFromMoment } from 'helpers/timeHelpers';
 
 const initAppointment: Appointment = {
   appointmentId: '',
-  daysById: {},
+  dayIds: [],
   title: ''
 };
 
 const dayIdsFromTimePeriod = (
   start?: moment.Moment,
   end?: moment.Moment
-): {} => {
+): string[] => {
   if (!start || !end) {
-    return {};
+    return [];
   }
 
   // setting days to midnight so that calculating how many days there are works.
+  const dayIds = [];
   const startDay = start.clone().startOf('day');
   const endDay = end.clone().startOf('day');
-
   const numDays = endDay.diff(startDay, 'day');
-
-  const newState = {};
 
   for (let dayIndex = 0; dayIndex <= numDays; dayIndex += 1) {
     const day = startDay.clone().add(dayIndex, 'day');
     const dayId = getDayIdFromMoment(day);
-    newState[dayId] = dayId;
+    dayIds.push(dayId);
   }
 
-  return newState;
+  return dayIds;
 };
 
 const appointment = (
@@ -58,13 +56,13 @@ const appointment = (
       return {
         ...state,
         start: action.payload.start,
-        daysById: dayIdsFromTimePeriod(action.payload.start, state.end)
+        dayIds: dayIdsFromTimePeriod(action.payload.start, state.end)
       };
     case types.APPOINTMENT_EDITOR_UPDATE_END:
       return {
         ...state,
         end: action.payload.end,
-        daysById: dayIdsFromTimePeriod(state.start, action.payload.end)
+        dayIds: dayIdsFromTimePeriod(state.start, action.payload.end)
       };
     default:
       return state;

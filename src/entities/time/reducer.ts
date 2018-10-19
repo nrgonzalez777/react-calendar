@@ -2,9 +2,7 @@ import { AnyAction, Reducer } from 'redux';
 import * as moment from 'moment';
 
 import { APP_INIT } from 'App/store/types';
-import { appointmentEditorTypes } from 'components/AppointmentEditor/store';
 import { calendarTypes } from 'components/Calendar/store';
-import { Appointment } from 'entities/appointments/state';
 import {
   getMonthIdFromMoment,
   getWeekIdFromMoment,
@@ -21,8 +19,7 @@ const initState: Time = {
 
 const createTimeEntitiesForMonth = (
   state: Time,
-  datetime: moment.Moment,
-  appointments: Appointment[]
+  datetime: moment.Moment
 ): Time => {
   // Unfortunately Moment is a mutable library, so we need to be careful
   // and clone moments for mutable operations.
@@ -75,12 +72,6 @@ const createTimeEntitiesForMonth = (
       const newDay: Day = {
         dayId,
         monthId: getMonthIdFromMoment(weekDay),
-        appointmentsById: appointments
-          .filter(appt => appt.daysById[dayId])
-          .reduce((map, obj) => {
-            map[obj.appointmentId] = obj.appointmentId;
-            return map;
-          },      {}),
         moment: weekDay,
         dayOfMonth: weekDay.date()
       };
@@ -96,60 +87,6 @@ const createTimeEntitiesForMonth = (
   return newState;
 };
 
-const updateDaysWithAppointment = (
-  state: Time,
-  appointment: Appointment
-): Time => {
-  const newState = { ...state };
-
-  const dayIds = Object.keys(appointment.daysById);
-
-  dayIds.forEach(dayId => {
-    const dayObj = state.days[dayId];
-
-    // Add the new appointment id to the reference collection.
-    if (dayObj) {
-      newState.days[dayId] = {
-        ...dayObj,
-        appointmentsById: {
-          ...dayObj.appointmentsById,
-          [appointment.appointmentId]: appointment.appointmentId
-        }
-      };
-    }
-  });
-
-  return newState;
-};
-
-const removeAppointmentFromDays = (
-  state: Time,
-  appointmentId: string,
-  dayIds: { [key: string]: string }
-): Time => {
-  const newState = { ...state };
-
-  const dayIdArray = Object.keys(dayIds);
-
-  dayIdArray.forEach(dayId => {
-    const dayObj: Day = state.days[dayId];
-
-    // Remove appointment id to the reference collection.
-    if (dayObj) {
-      const {
-        [appointmentId]: removed,
-        ...newAppointments
-      } = dayObj.appointmentsById;
-      newState.days[dayId] = {
-        ...dayObj,
-        appointmentsById: newAppointments
-      };
-    }
-  });
-
-  return newState;
-};
-
 const reducer: Reducer<Time> = (
   state: Time = initState,
   action: AnyAction
@@ -158,19 +95,7 @@ const reducer: Reducer<Time> = (
     case APP_INIT:
     case calendarTypes.CALENDAR_PREVIOUS_MONTH:
     case calendarTypes.CALENDAR_NEXT_MONTH:
-      return createTimeEntitiesForMonth(
-        state,
-        action.payload.month,
-        action.payload.currentAppointments
-      );
-    case appointmentEditorTypes.APPOINTMENT_EDITOR_SAVE:
-      return updateDaysWithAppointment(state, action.payload.newAppointment);
-    case appointmentEditorTypes.APPOINTMENT_EDITOR_DELETE:
-      return removeAppointmentFromDays(
-        state,
-        action.payload.appointmentId,
-        action.payload.dayIds
-      );
+      return createTimeEntitiesForMonth(state, action.payload.month);
     default:
       return state;
   }
