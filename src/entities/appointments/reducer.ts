@@ -1,29 +1,8 @@
 import { combineReducers, AnyAction, Reducer } from 'redux';
-import { Moment } from 'moment';
 
 import { appointmentEditorTypes } from 'components/AppointmentEditor/store';
 
 import { Appointments, AppointmentMap, Appointment } from './state';
-
-// State Shape
-
-export type Appointment = {
-  appointmentId: string;
-  title: string;
-  start?: Moment;
-  end?: Moment;
-  daysById: { [key: string]: string };
-};
-
-export type AppointmentMap = {
-  [key: string]: Appointment;
-};
-
-export type Appointments = {
-  byId: AppointmentMap;
-};
-
-// Reducers
 
 const saveAppointment = (
   state: AppointmentMap,
