@@ -5,7 +5,7 @@ import time from './time';
 
 const reducer: Reducer<Entities> = combineReducers({
   appointments,
-  time,
+  time
 });
 
 export default reducer;
