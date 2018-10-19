@@ -5,6 +5,20 @@ import { appointmentEditorTypes } from 'components/AppointmentEditor/store/';
 import { Appointment } from '../appointments/state';
 import { AppointmentsByDay, AppointmentsForDay } from './state';
 
+const byDayId = (
+  state: AppointmentsForDay = {},
+  action: AnyAction
+): AppointmentsForDay => {
+  switch (action.type) {
+    case appointmentEditorTypes.APPOINTMENT_EDITOR_SAVE:
+      return saveAppointment(state, action.payload.newAppointment);
+    case appointmentEditorTypes.APPOINTMENT_EDITOR_DELETE:
+      return deleteAppointment(state, action.payload.appointmentId);
+    default:
+      return state;
+  }
+};
+
 const saveAppointment = (
   state: AppointmentsForDay,
   appointment: Appointment
@@ -46,20 +60,6 @@ const deleteAppointment = (
   }
 
   return newMap;
-};
-
-const byDayId = (
-  state: AppointmentsForDay = {},
-  action: AnyAction
-): AppointmentsForDay => {
-  switch (action.type) {
-    case appointmentEditorTypes.APPOINTMENT_EDITOR_SAVE:
-      return saveAppointment(state, action.payload.newAppointment);
-    case appointmentEditorTypes.APPOINTMENT_EDITOR_DELETE:
-      return deleteAppointment(state, action.payload.appointmentId);
-    default:
-      return state;
-  }
 };
 
 const reducer: Reducer<AppointmentsByDay> = combineReducers({

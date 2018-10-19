@@ -20,8 +20,6 @@ const appointmentSelected = (appointmentId: string) => (
     type: types.DAY_BREAKDOWN_APPOINTMENT_SELECTED,
     payload: {
       appointment,
-      start: appointment.start,
-      end: appointment.end,
       now: moment()
     }
   });

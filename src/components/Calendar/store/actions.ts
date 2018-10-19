@@ -5,7 +5,7 @@ import { AppState } from 'store/state';
 import selectors from './selectors';
 import types from './types';
 
-const changeSelectedDay = (dayId: string) => ({
+const calendarDaySelected = (dayId: string) => ({
   type: types.CALENDAR_DAY_SELECTED,
   payload: {
     dayId
@@ -43,7 +43,7 @@ const goToNextMonth = () => (
 };
 
 export default {
-  changeSelectedDay,
+  calendarDaySelected,
   goToPreviousMonth,
   goToNextMonth
 };

@@ -24,7 +24,7 @@ const mapStateToProps = (
 const mapDispatchToProps = (
   dispatch: Dispatch<AppState>
 ): DayViewOutputProps => ({
-  onDaySelected: (dayId: string) => dispatch(actions.changeSelectedDay(dayId))
+  onDaySelected: (dayId: string) => dispatch(actions.calendarDaySelected(dayId))
 });
 
 export default connect(
