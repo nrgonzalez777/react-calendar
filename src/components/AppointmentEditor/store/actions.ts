@@ -9,16 +9,12 @@ import types from './types';
 
 const closeEditor = () => ({
   type: types.APPOINTMENT_EDITOR_CLOSE,
-  payload: {},
-  error: false,
-  metadata: {}
+  payload: {}
 });
 
 const updateTitle = (title: string) => ({
   type: types.APPOINTMENT_EDITOR_UPDATE_TITLE,
-  payload: { title },
-  error: false,
-  metadata: {}
+  payload: { title }
 });
 
 const updateStart = (start: string) => (
@@ -36,9 +32,7 @@ const updateStart = (start: string) => (
       end,
       now: moment(),
       start: moment(start)
-    },
-    error: false,
-    metadata: {}
+    }
   });
 };
 
@@ -57,9 +51,7 @@ const updateEnd = (end: string) => (
       start,
       now: moment(),
       end: moment(end)
-    },
-    error: false,
-    metadata: {}
+    }
   });
 };
 
@@ -74,9 +66,7 @@ const saveAppointment = () => (
     type: types.APPOINTMENT_EDITOR_SAVE,
     payload: {
       newAppointment
-    },
-    error: false,
-    metadata: {}
+    }
   });
 };
 
@@ -92,9 +82,7 @@ const deleteAppointment = () => (
     payload: {
       appointmentId: appointment.appointmentId,
       dayIds: appointment.daysById
-    },
-    error: false,
-    metadata: {}
+    }
   });
 };
 

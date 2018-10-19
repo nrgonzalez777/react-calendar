@@ -10,9 +10,7 @@ const changeSelectedDay = (dayId: string) => ({
   type: types.CALENDAR_DAY_SELECTED,
   payload: {
     dayId
-  },
-  error: false,
-  metadata: {}
+  }
 });
 
 const goToPreviousMonth = () => (
@@ -28,9 +26,7 @@ const goToPreviousMonth = () => (
     payload: {
       currentAppointments,
       month: selectedMonth.clone().subtract(1, 'month')
-    },
-    error: false,
-    metadata: {}
+    }
   });
 };
 
@@ -47,9 +43,7 @@ const goToNextMonth = () => (
     payload: {
       currentAppointments,
       month: selectedMonth.clone().add(1, 'month')
-    },
-    error: false,
-    metadata: {}
+    }
   });
 };
 

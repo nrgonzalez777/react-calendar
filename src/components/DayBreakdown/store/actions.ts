@@ -23,9 +23,7 @@ const appointmentSelected = (appointmentId: string) => (
       start: appointment.start,
       end: appointment.end,
       now: moment()
-    },
-    error: false,
-    metadata: {}
+    }
   });
 };
 
