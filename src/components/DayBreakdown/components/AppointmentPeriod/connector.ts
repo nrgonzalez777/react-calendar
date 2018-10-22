@@ -2,7 +2,7 @@ import { connect, Dispatch } from 'react-redux';
 import { AppState } from 'store/state';
 
 import { appointmentSelectors } from 'entities/appointments';
-import { dayBreakdownActions, dayBreakdownSelectors } from '../../store';
+import { dayBreakdownSelectors } from '../../store';
 
 import {
   AppointmentPeriodViewInputProps,
@@ -11,23 +11,29 @@ import {
 
 export type AppointmentPeriodViewOwnProps = {
   appointmentId: string;
+  onAppointmentSelected: () => void;
 };
 
 const mapStateToProps = (
   state: AppState,
   props: AppointmentPeriodViewOwnProps
 ): AppointmentPeriodViewInputProps => ({
-  appointmentId: props.appointmentId,
   title: appointmentSelectors.getAppointmentTitle(state, props.appointmentId),
-  topOffsetPercent: dayBreakdownSelectors.getTopOffsetPercent(state, props.appointmentId),
-  heightPercent: dayBreakdownSelectors.getHeightPercent(state, props.appointmentId)
+  topOffsetPercent: dayBreakdownSelectors.getTopOffsetPercent(
+    state,
+    props.appointmentId
+  ),
+  heightPercent: dayBreakdownSelectors.getHeightPercent(
+    state,
+    props.appointmentId
+  )
 });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<AppState>
+  dispatch: Dispatch<AppState>,
+  props: AppointmentPeriodViewOwnProps
 ): AppointmentPeriodViewOutputProps => ({
-  onAppointmentSelected: (appointmentId: string) =>
-    dispatch(dayBreakdownActions.appointmentSelected(appointmentId))
+  onAppointmentSelected: props.onAppointmentSelected
 });
 
 export default connect(

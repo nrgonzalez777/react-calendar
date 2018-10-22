@@ -1,10 +1,11 @@
 import moment from 'moment';
-import { connect } from 'react-redux';
+import { connect, Dispatch } from 'react-redux';
 import { AppState } from 'store/state';
 
 import { calendarSelectors } from 'components/Calendar/store';
 
-import { Hour, DayBreakdownViewProps } from './view';
+import { dayBreakdownActions } from './store';
+import { Hour, DayBreakdownViewInputProps } from './view';
 
 // TODO: not proud of this, but it is getting late.
 const createHours = (): Hour[] => {
@@ -21,9 +22,17 @@ const createHours = (): Hour[] => {
   return hours;
 };
 
-const mapStateToProps = (state: AppState): DayBreakdownViewProps => ({
+const mapStateToProps = (state: AppState): DayBreakdownViewInputProps => ({
   appointmentIds: calendarSelectors.getSelectedDayAppointmentIds(state),
   hours: createHours()
 });
 
-export default connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: Dispatch<AppState>) => ({
+  onAppointmentSelected: (appointmentId: string) =>
+    dispatch(dayBreakdownActions.appointmentSelected(appointmentId))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
