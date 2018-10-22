@@ -23,7 +23,6 @@ export type WeekMap = {
 export type Day = {
   dayId: string;
   monthId: string;
-  appointmentsById: { [key: string]: string };
   moment: Moment;
   dayOfMonth: number;
 };

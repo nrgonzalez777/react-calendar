@@ -1,46 +1,51 @@
 import moment from 'moment';
 import { AppState } from 'store/state';
-import { getAppointmentTitle } from 'entities/appointments/selectors';
-
-export const getState = (state: AppState) => state.components.appointmentEditor;
-
-export const getStrings = (state: AppState) => state.strings.appointmentEditor;
-
-export const isVisible = (state: AppState) => getState(state).isVisible;
-
-export const getEditingAppointment = (state: AppState) => getState(state).appointment;
-
-export const getEditingAppointmentTitle = (state: AppState) => getEditingAppointment(state).title;
+import { appointmentSelectors } from 'entities/appointments';
 
 const datetimeLocalFormat = 'YYYY-MM-DDTHH:mm';
 
-export const getEditingAppointmentStartAsString = (state: AppState) => {
+const getState = (state: AppState) => state.components.appointmentEditor;
+
+const getStrings = (state: AppState) => state.strings.appointmentEditor;
+
+const getDeleteLabel = (state: AppState) => getStrings(state).deleteLabel;
+
+const getEditingAppointment = (state: AppState) => getState(state).appointment;
+
+const getEditingAppointmentTitle = (state: AppState) =>
+  getEditingAppointment(state).title;
+
+const getEditingAppointmentStartAsString = (state: AppState) => {
   const start = getEditingAppointment(state).start;
   return start && start.isValid() ? start.format(datetimeLocalFormat) : '';
 };
 
-export const getEditingAppointmentMinimumStartAsString = (state: AppState) =>
+const getEditingAppointmentMinimumStartAsString = (state: AppState) =>
   moment().format(datetimeLocalFormat);
 
-export const getEditingAppointmentMinimumEndAsString = getEditingAppointmentStartAsString;
+const getEditingAppointmentMinimumEndAsString = getEditingAppointmentStartAsString;
 
-export const getEditingAppointmentEndAsString = (state: AppState) => {
+const getEditingAppointmentEndAsString = (state: AppState) => {
   const end = getEditingAppointment(state).end;
   return end && end.isValid() ? end.format(datetimeLocalFormat) : '';
 };
 
-export const isValid = (state: AppState) => {
+const getIsValid = (state: AppState) => {
   const validation = getState(state).validation;
-  return validation.isTitleValid
-    && validation.isStartValid
-    && validation.isStartInTheFuture
-    && validation.isStartLessThanEnd
-    && validation.isEndValid
-    && validation.isEndInTheFuture
-    && !validation.appointmentConflictId;
+  return (
+    validation.isTitleValid &&
+    validation.isStartValid &&
+    validation.isStartInTheFuture &&
+    validation.isStartLessThanEnd &&
+    validation.isEndValid &&
+    validation.isEndInTheFuture &&
+    !validation.appointmentConflictId
+  );
 };
 
-export const getStartErrorMessage = (state: AppState) => {
+const getIsVisible = (state: AppState) => getState(state).isVisible;
+
+const getStartErrorMessage = (state: AppState) => {
   const strings = getStrings(state);
   const validation = getState(state).validation;
 
@@ -63,7 +68,7 @@ export const getStartErrorMessage = (state: AppState) => {
   return '';
 };
 
-export const getEndErrorMessage = (state: AppState) => {
+const getEndErrorMessage = (state: AppState) => {
   const strings = getStrings(state);
   const validation = getState(state).validation;
 
@@ -81,9 +86,35 @@ export const getEndErrorMessage = (state: AppState) => {
 
   if (validation.appointmentConflictId) {
     // TODO: integrate format library
-    return strings.conflictErrorFormat
-    + getAppointmentTitle(state, validation.appointmentConflictId);
+    return (
+      strings.conflictErrorFormat +
+      appointmentSelectors.getAppointmentTitle(
+        state,
+        validation.appointmentConflictId
+      )
+    );
   }
 
   return '';
+};
+
+const getPlaceholderTitle = (state: AppState) =>
+  getStrings(state).placeholderTitle;
+
+const getSaveLabel = (state: AppState) => getStrings(state).saveLabel;
+
+export default {
+  getDeleteLabel,
+  getEditingAppointment,
+  getEditingAppointmentTitle,
+  getEditingAppointmentStartAsString,
+  getEditingAppointmentMinimumStartAsString,
+  getEditingAppointmentMinimumEndAsString,
+  getEditingAppointmentEndAsString,
+  getIsValid,
+  getIsVisible,
+  getStartErrorMessage,
+  getEndErrorMessage,
+  getPlaceholderTitle,
+  getSaveLabel
 };

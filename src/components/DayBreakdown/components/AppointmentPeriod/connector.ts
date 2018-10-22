@@ -1,9 +1,8 @@
 import { connect, Dispatch } from 'react-redux';
 import { AppState } from 'store/state';
 
-import { getAppointmentTitle } from 'entities/appointments/selectors';
-import { getTopOffsetPercent, getHeightPercent } from '../../store/selectors';
-import { appointmentSelected } from '../../store/actions';
+import { appointmentSelectors } from 'entities/appointments';
+import { dayBreakdownSelectors } from '../../store';
 
 import {
   AppointmentPeriodViewInputProps,
@@ -12,23 +11,29 @@ import {
 
 export type AppointmentPeriodViewOwnProps = {
   appointmentId: string;
+  onAppointmentSelected: () => void;
 };
 
 const mapStateToProps = (
   state: AppState,
   props: AppointmentPeriodViewOwnProps
 ): AppointmentPeriodViewInputProps => ({
-  appointmentId: props.appointmentId,
-  title: getAppointmentTitle(state, props.appointmentId),
-  topOffsetPercent: getTopOffsetPercent(state, props.appointmentId),
-  heightPercent: getHeightPercent(state, props.appointmentId)
+  title: appointmentSelectors.getAppointmentTitle(state, props.appointmentId),
+  topOffsetPercent: dayBreakdownSelectors.getTopOffsetPercent(
+    state,
+    props.appointmentId
+  ),
+  heightPercent: dayBreakdownSelectors.getHeightPercent(
+    state,
+    props.appointmentId
+  )
 });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<AppState>
+  dispatch: Dispatch<AppState>,
+  props: AppointmentPeriodViewOwnProps
 ): AppointmentPeriodViewOutputProps => ({
-  onAppointmentSelected: (appointmentId: string) =>
-    dispatch(appointmentSelected(appointmentId))
+  onAppointmentSelected: props.onAppointmentSelected
 });
 
 export default connect(

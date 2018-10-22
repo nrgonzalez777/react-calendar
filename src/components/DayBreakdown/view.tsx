@@ -5,10 +5,17 @@ import colors from 'constants/colors';
 
 import AppointmentPeriod from './components/AppointmentPeriod';
 
-export type DayBreakdownViewProps = {
+export type DayBreakdownViewInputProps = {
   appointmentIds: string[];
   hours: Hour[];
 };
+
+export type DayBreakdownViewOutputProps = {
+  onAppointmentSelected: (appointmentId: string) => void;
+};
+
+export type DayBreakdownViewProps = DayBreakdownViewInputProps &
+  DayBreakdownViewOutputProps;
 
 export type Hour = {
   index: number;
@@ -24,7 +31,11 @@ const DayBreakdownView = (props: DayBreakdownViewProps) => {
         </div>
       ))}
       {props.appointmentIds.map(id => (
-        <AppointmentPeriod appointmentId={id} key={id} />
+        <AppointmentPeriod
+          appointmentId={id}
+          key={id}
+          onAppointmentSelected={() => props.onAppointmentSelected(id)}
+        />
       ))}
     </div>
   );

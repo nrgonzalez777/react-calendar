@@ -1,10 +1,13 @@
 import { AppState } from 'store/state';
-import { getSelectedDay } from 'components/Calendar/store/selectors';
-import { getAppointmentById } from 'entities/appointments/selectors';
+import { calendarSelectors } from 'components/Calendar/store';
+import { appointmentSelectors } from 'entities/appointments';
 
-export const getTopOffsetPercent = (state: AppState, appointmentId: string) => {
-  const appointment = getAppointmentById(state, appointmentId);
-  const selectedDay = getSelectedDay(state);
+const getTopOffsetPercent = (state: AppState, appointmentId: string) => {
+  const appointment = appointmentSelectors.getAppointmentById(
+    state,
+    appointmentId
+  );
+  const selectedDay = calendarSelectors.getSelectedDay(state);
 
   if (!appointment.start) {
     return 0;
@@ -18,9 +21,12 @@ export const getTopOffsetPercent = (state: AppState, appointmentId: string) => {
   return minutesAtStart > 0 ? minutesAtStart / 1440 : 0;
 };
 
-export const getHeightPercent = (state: AppState, appointmentId: string) => {
-  const appointment = getAppointmentById(state, appointmentId);
-  const selectedDay = getSelectedDay(state);
+const getHeightPercent = (state: AppState, appointmentId: string) => {
+  const appointment = appointmentSelectors.getAppointmentById(
+    state,
+    appointmentId
+  );
+  const selectedDay = calendarSelectors.getSelectedDay(state);
 
   if (!appointment.start || !appointment.end) {
     return 0;
@@ -46,4 +52,9 @@ export const getHeightPercent = (state: AppState, appointmentId: string) => {
   }
 
   return heightPercent;
+};
+
+export default {
+  getTopOffsetPercent,
+  getHeightPercent
 };

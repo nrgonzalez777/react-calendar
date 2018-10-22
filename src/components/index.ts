@@ -5,7 +5,7 @@ import { default as calendar } from './Calendar/store';
 
 const reducer: Reducer<Components> = combineReducers({
   appointmentEditor,
-  calendar,
+  calendar
 });
 
 export default reducer;

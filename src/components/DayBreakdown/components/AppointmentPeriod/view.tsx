@@ -4,14 +4,13 @@ import { StyleSheet, css } from 'aphrodite';
 import colors from 'constants/colors';
 
 export type AppointmentPeriodViewInputProps = {
-  appointmentId: string;
   title: string;
   topOffsetPercent: number;
   heightPercent: number;
 };
 
 export type AppointmentPeriodViewOutputProps = {
-  onAppointmentSelected: (appointmentId: string) => void;
+  onAppointmentSelected: () => void;
 };
 
 export type AppointmentPeriodViewProps = AppointmentPeriodViewInputProps &
@@ -25,7 +24,7 @@ const AppointmentPeriodView = (props: AppointmentPeriodViewProps) => {
         top: props.topOffsetPercent * (50 * 24),
         height: props.heightPercent * (50 * 24)
       }}
-      onClick={() => props.onAppointmentSelected(props.appointmentId)}
+      onClick={props.onAppointmentSelected}
     >
       {props.title}
     </div>
