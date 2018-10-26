@@ -22,7 +22,7 @@ const updateStart = (start: string) => (
   getState: () => AppState
 ) => {
   const state = getState();
-  const end = selectors.getEditingAppointment(state).end;
+  const end = selectors.getEditingAppointmentEnd(state);
   const currentAppointments = appointmentSelectors.getAppointmentsArray(state);
 
   dispatch({
@@ -41,7 +41,7 @@ const updateEnd = (end: string) => (
   getState: () => AppState
 ) => {
   const state = getState();
-  const start = selectors.getEditingAppointment(state).start;
+  const start = selectors.getEditingAppointmentStart(state);
   const currentAppointments = appointmentSelectors.getAppointmentsArray(state);
 
   dispatch({

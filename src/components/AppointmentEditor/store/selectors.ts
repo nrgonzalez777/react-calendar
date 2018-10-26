@@ -1,37 +1,42 @@
-import moment from 'moment';
 import { AppState } from 'store/state';
+import selectorFactory, { complexSelectorFactory } from 'store/selectorFactory';
+import { AppointmentEditorStrings } from 'strings/state';
 import { appointmentSelectors } from 'entities/appointments';
+
+import { AppointmentEditor, Validation } from './state';
 
 const datetimeLocalFormat = 'YYYY-MM-DDTHH:mm';
 
-const getState = (state: AppState) => state.components.appointmentEditor;
+const getDeleteLabel = (strings: AppointmentEditorStrings) =>
+  strings.deleteLabel;
 
-const getStrings = (state: AppState) => state.strings.appointmentEditor;
+const getEditingAppointment = (state: AppointmentEditor) => state.appointment;
 
-const getDeleteLabel = (state: AppState) => getStrings(state).deleteLabel;
-
-const getEditingAppointment = (state: AppState) => getState(state).appointment;
-
-const getEditingAppointmentTitle = (state: AppState) =>
+const getEditingAppointmentTitle = (state: AppointmentEditor) =>
   getEditingAppointment(state).title;
 
-const getEditingAppointmentStartAsString = (state: AppState) => {
-  const start = getEditingAppointment(state).start;
+const getEditingAppointmentStart = (state: AppointmentEditor) => {
+  return getEditingAppointment(state).start;
+};
+
+const getEditingAppointmentStartAsString = (state: AppointmentEditor) => {
+  const start = getEditingAppointmentStart(state);
   return start && start.isValid() ? start.format(datetimeLocalFormat) : '';
 };
 
-const getEditingAppointmentMinimumStartAsString = (state: AppState) =>
-  moment().format(datetimeLocalFormat);
+const getEditingAppointmentEnd = (state: AppointmentEditor) => {
+  return getEditingAppointment(state).end;
+};
 
-const getEditingAppointmentMinimumEndAsString = getEditingAppointmentStartAsString;
-
-const getEditingAppointmentEndAsString = (state: AppState) => {
-  const end = getEditingAppointment(state).end;
+const getEditingAppointmentEndAsString = (state: AppointmentEditor) => {
+  const end = getEditingAppointmentEnd(state);
   return end && end.isValid() ? end.format(datetimeLocalFormat) : '';
 };
 
-const getIsValid = (state: AppState) => {
-  const validation = getState(state).validation;
+const getValidationState = (state: AppointmentEditor) => state.validation;
+
+const getIsValid = (state: AppointmentEditor) => {
+  const validation = getValidationState(state);
   return (
     validation.isTitleValid &&
     validation.isStartValid &&
@@ -43,11 +48,14 @@ const getIsValid = (state: AppState) => {
   );
 };
 
-const getIsVisible = (state: AppState) => getState(state).isVisible;
+const getIsVisible = (state: AppointmentEditor) => state.isVisible;
 
-const getStartErrorMessage = (state: AppState) => {
-  const strings = getStrings(state);
-  const validation = getState(state).validation;
+const getStartErrorMessage = (
+  getStrings: () => AppointmentEditorStrings,
+  getValidation: () => Validation
+) => (): string => {
+  const strings = getStrings();
+  const validation = getValidation();
 
   if (!validation.hasSetStart) {
     return '';
@@ -68,9 +76,14 @@ const getStartErrorMessage = (state: AppState) => {
   return '';
 };
 
-const getEndErrorMessage = (state: AppState) => {
-  const strings = getStrings(state);
-  const validation = getState(state).validation;
+const getEndErrorMessage = (
+  getState: () => AppointmentEditor,
+  getStrings: () => AppointmentEditorStrings,
+  getAppointmentConflictTitle: (appointmentId: string) => string
+) => () => {
+  const state = getState();
+  const strings = getStrings();
+  const validation = getValidationState(state);
 
   if (!validation.hasSetEnd) {
     return '';
@@ -88,28 +101,25 @@ const getEndErrorMessage = (state: AppState) => {
     // TODO: integrate format library
     return (
       strings.conflictErrorFormat +
-      appointmentSelectors.getAppointmentTitle(
-        state,
-        validation.appointmentConflictId
-      )
+      getAppointmentConflictTitle(validation.appointmentConflictId)
     );
   }
 
   return '';
 };
 
-const getPlaceholderTitle = (state: AppState) =>
-  getStrings(state).placeholderTitle;
+const getPlaceholderTitle = (strings: AppointmentEditorStrings) =>
+  strings.placeholderTitle;
 
-const getSaveLabel = (state: AppState) => getStrings(state).saveLabel;
+const getSaveLabel = (strings: AppointmentEditorStrings) => strings.saveLabel;
 
-export default {
+export const rawSelectors = {
   getDeleteLabel,
   getEditingAppointment,
   getEditingAppointmentTitle,
+  getEditingAppointmentStart,
   getEditingAppointmentStartAsString,
-  getEditingAppointmentMinimumStartAsString,
-  getEditingAppointmentMinimumEndAsString,
+  getEditingAppointmentEnd,
   getEditingAppointmentEndAsString,
   getIsValid,
   getIsVisible,
@@ -117,4 +127,55 @@ export default {
   getEndErrorMessage,
   getPlaceholderTitle,
   getSaveLabel
+};
+
+const getAppointmentEditorState = (state: AppState) =>
+  state.components.appointmentEditor;
+
+const getAppointmentEditorStrings = (state: AppState) =>
+  state.strings.appointmentEditor;
+
+export default {
+  getDeleteLabel: selectorFactory(getDeleteLabel, getAppointmentEditorStrings),
+  getEditingAppointment: selectorFactory(
+    getEditingAppointment,
+    getAppointmentEditorState
+  ),
+  getEditingAppointmentTitle: selectorFactory(
+    getEditingAppointmentTitle,
+    getAppointmentEditorState
+  ),
+  getEditingAppointmentStart: selectorFactory(
+    getEditingAppointmentStart,
+    getAppointmentEditorState
+  ),
+  getEditingAppointmentStartAsString: selectorFactory(
+    getEditingAppointmentStartAsString,
+    getAppointmentEditorState
+  ),
+  getEditingAppointmentEnd: selectorFactory(
+    getEditingAppointmentEnd,
+    getAppointmentEditorState
+  ),
+  getEditingAppointmentEndAsString: selectorFactory(
+    getEditingAppointmentEndAsString,
+    getAppointmentEditorState
+  ),
+  getIsValid: selectorFactory(getIsValid, getAppointmentEditorState),
+  getIsVisible: selectorFactory(getIsVisible, getAppointmentEditorState),
+  getStartErrorMessage: complexSelectorFactory(
+    getStartErrorMessage,
+    getAppointmentEditorStrings
+  ),
+  getEndErrorMessage: complexSelectorFactory(
+    getEndErrorMessage,
+    getAppointmentEditorState,
+    getAppointmentEditorStrings,
+    appointmentSelectors.getAppointmentTitle
+  ),
+  getPlaceholderTitle: selectorFactory(
+    getPlaceholderTitle,
+    getAppointmentEditorStrings
+  ),
+  getSaveLabel: selectorFactory(getSaveLabel, getAppointmentEditorStrings)
 };

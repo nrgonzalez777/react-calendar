@@ -54,7 +54,7 @@
     "tslint-config-airbnb": "5.11.0",
     "tslint-config-prettier": "1.15.0",
     "tslint-react": "3.2.0",
-    "typescript": "2.9.2",
+    "typescript": "3.1.3",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
     "webpack-dev-server": "2.9.4",
@@ -103,7 +103,7 @@
     ],
     "globals": {
       "ts-jest": {
-        "tsConfigFile": "C:\\projects\\react-typescript\\tsconfig.test.json"
+        "tsConfigFile": "tsconfig.test.json"
       }
     }
   },

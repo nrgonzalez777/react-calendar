@@ -1,15 +1,5 @@
 export type Strings = {
-  appointmentEditor: {
-    placeholderTitle: string;
-    saveLabel: string;
-    deleteLabel: string;
-    startInvalidError: string;
-    startPastError: string;
-    startGreaterError: string;
-    endInvalidError: string;
-    endPastError: string;
-    conflictErrorFormat: string;
-  };
+  appointmentEditor: AppointmentEditorStrings;
   dayAbbr: {
     sunday: string;
     monday: string;
@@ -19,4 +9,16 @@ export type Strings = {
     friday: string;
     saturday: string;
   };
+};
+
+export type AppointmentEditorStrings = {
+  placeholderTitle: string;
+  saveLabel: string;
+  deleteLabel: string;
+  startInvalidError: string;
+  startPastError: string;
+  startGreaterError: string;
+  endInvalidError: string;
+  endPastError: string;
+  conflictErrorFormat: string;
 };
