@@ -1,10 +1,15 @@
 import { connect, Dispatch } from 'react-redux';
 import { AppState } from 'store/state';
-import { AddAppointmentProps } from './props';
-import { addAppointment } from './store/actions';
+import { AddAppointmentViewProps } from './view';
+import { addAppointmentActions } from './store';
 
-const mapPropsToDispatch = (dispatch: Dispatch<AppState>): AddAppointmentProps => ({
-  onAddAppointment: () => dispatch(addAppointment()),
+const mapPropsToDispatch = (
+  dispatch: Dispatch<AppState>
+): AddAppointmentViewProps => ({
+  onAddAppointment: () => dispatch(addAppointmentActions.addAppointment())
 });
 
-export default connect(null, mapPropsToDispatch);
+export default connect(
+  null,
+  mapPropsToDispatch
+);

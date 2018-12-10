@@ -2,31 +2,28 @@ import { Dispatch } from 'react-redux';
 import { AppState } from 'store/state';
 import moment from 'moment';
 
-import * as types from './types';
-import { getEditingAppointment } from './selectors';
-import { getAppointmentsArray } from 'entities/appointments/selectors';
+import { appointmentSelectors } from 'entities/appointments';
 
-export const closeEditor = () => ({
+import selectors from './selectors';
+import types from './types';
+
+const closeEditor = () => ({
   type: types.APPOINTMENT_EDITOR_CLOSE,
-  payload: {},
-  error: false,
-  metadata: {},
+  payload: {}
 });
 
-export const updateTitle = (title: string) => ({
+const updateTitle = (title: string) => ({
   type: types.APPOINTMENT_EDITOR_UPDATE_TITLE,
-  payload: { title },
-  error: false,
-  metadata: {},
+  payload: { title }
 });
 
-export const updateStart = (start: string) => (
+const updateStart = (start: string) => (
   dispatch: Dispatch<AppState>,
-  getState: () => AppState,
+  getState: () => AppState
 ) => {
   const state = getState();
-  const end = getEditingAppointment(state).end;
-  const currentAppointments = getAppointmentsArray(state);
+  const end = selectors.getEditingAppointment(state).end;
+  const currentAppointments = appointmentSelectors.getAppointmentsArray(state);
 
   dispatch({
     type: types.APPOINTMENT_EDITOR_UPDATE_START,
@@ -34,20 +31,18 @@ export const updateStart = (start: string) => (
       currentAppointments,
       end,
       now: moment(),
-      start: moment(start),
-    },
-    error: false,
-    metadata: {},
+      start: moment(start)
+    }
   });
 };
 
-export const updateEnd = (end: string) => (
+const updateEnd = (end: string) => (
   dispatch: Dispatch<AppState>,
-  getState: () => AppState,
+  getState: () => AppState
 ) => {
   const state = getState();
-  const start = getEditingAppointment(state).start;
-  const currentAppointments = getAppointmentsArray(state);
+  const start = selectors.getEditingAppointment(state).start;
+  const currentAppointments = appointmentSelectors.getAppointmentsArray(state);
 
   dispatch({
     type: types.APPOINTMENT_EDITOR_UPDATE_END,
@@ -56,43 +51,45 @@ export const updateEnd = (end: string) => (
       start,
       now: moment(),
       end: moment(end)
-    },
-    error: false,
-    metadata: {},
+    }
   });
 };
 
-export const saveAppointment = () => (
+const saveAppointment = () => (
   dispatch: Dispatch<AppState>,
-  getState: () => AppState,
+  getState: () => AppState
 ) => {
   const state = getState();
-  const newAppointment = getEditingAppointment(state);
+  const newAppointment = selectors.getEditingAppointment(state);
 
   dispatch({
     type: types.APPOINTMENT_EDITOR_SAVE,
     payload: {
       newAppointment
-    },
-    error: false,
-    metadata: {},
+    }
   });
 };
 
-export const deleteAppointment = () => (
+const deleteAppointment = () => (
   dispatch: Dispatch<AppState>,
-  getState: () => AppState,
+  getState: () => AppState
 ) => {
   const state = getState();
-  const appointment = getEditingAppointment(state);
+  const appointment = selectors.getEditingAppointment(state);
 
   dispatch({
     type: types.APPOINTMENT_EDITOR_DELETE,
     payload: {
-      appointmentId: appointment.appointmentId,
-      dayIds: appointment.daysById,
-    },
-    error: false,
-    metadata: {},
+      appointmentId: appointment.appointmentId
+    }
   });
+};
+
+export default {
+  closeEditor,
+  updateTitle,
+  updateStart,
+  updateEnd,
+  saveAppointment,
+  deleteAppointment
 };

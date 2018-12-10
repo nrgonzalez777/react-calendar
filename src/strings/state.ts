@@ -1,4 +1,4 @@
-export interface Strings {
+export type Strings = {
   appointmentEditor: {
     placeholderTitle: string;
     saveLabel: string;
@@ -19,4 +19,4 @@ export interface Strings {
     friday: string;
     saturday: string;
   };
-}
+};

@@ -1,6 +1,6 @@
 import { Appointment } from 'entities/appointments/state';
 
-export interface Validation {
+export type Validation = {
   appointmentConflictId: string;
   hasSetStart: boolean;
   hasSetEnd: boolean;
@@ -10,10 +10,10 @@ export interface Validation {
   isEndValid: boolean;
   isEndInTheFuture: boolean;
   isTitleValid: boolean;
-}
+};
 
-export interface AppointmentEditor {
+export type AppointmentEditor = {
   appointment: Appointment;
   isVisible: boolean;
   validation: Validation;
-}
+};
