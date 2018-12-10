@@ -1,37 +1,47 @@
-import moment from 'moment';
+// import moment from 'moment';
+import { createSelector } from 'reselect';
+
 import { AppState } from 'store/state';
+import createLocalSelector from 'store/createLocalSelector';
+import { AppointmentEditorStrings } from 'strings/state';
 import { appointmentSelectors } from 'entities/appointments';
+
+import { AppointmentEditor, Validation } from './state';
 
 const datetimeLocalFormat = 'YYYY-MM-DDTHH:mm';
 
-const getState = (state: AppState) => state.components.appointmentEditor;
+// Local selectors
 
-const getStrings = (state: AppState) => state.strings.appointmentEditor;
+const getDeleteLabel = (strings: AppointmentEditorStrings) =>
+  strings.deleteLabel;
 
-const getDeleteLabel = (state: AppState) => getStrings(state).deleteLabel;
+const getEditingAppointment = (state: AppointmentEditor) => state.appointment;
 
-const getEditingAppointment = (state: AppState) => getState(state).appointment;
-
-const getEditingAppointmentTitle = (state: AppState) =>
+const getEditingAppointmentTitle = (state: AppointmentEditor) =>
   getEditingAppointment(state).title;
 
-const getEditingAppointmentStartAsString = (state: AppState) => {
-  const start = getEditingAppointment(state).start;
+const getEditingAppointmentStart = (state: AppointmentEditor) => {
+  return getEditingAppointment(state).start;
+};
+
+const getEditingAppointmentStartAsString = (state: AppointmentEditor) => {
+  const start = getEditingAppointmentStart(state);
   return start && start.isValid() ? start.format(datetimeLocalFormat) : '';
 };
 
-const getEditingAppointmentMinimumStartAsString = (state: AppState) =>
-  moment().format(datetimeLocalFormat);
+const getEditingAppointmentEnd = (state: AppointmentEditor) => {
+  return getEditingAppointment(state).end;
+};
 
-const getEditingAppointmentMinimumEndAsString = getEditingAppointmentStartAsString;
-
-const getEditingAppointmentEndAsString = (state: AppState) => {
-  const end = getEditingAppointment(state).end;
+const getEditingAppointmentEndAsString = (state: AppointmentEditor) => {
+  const end = getEditingAppointmentEnd(state);
   return end && end.isValid() ? end.format(datetimeLocalFormat) : '';
 };
 
-const getIsValid = (state: AppState) => {
-  const validation = getState(state).validation;
+const getValidationState = (state: AppointmentEditor) => state.validation;
+
+const getIsValid = (state: AppointmentEditor) => {
+  const validation = getValidationState(state);
   return (
     validation.isTitleValid &&
     validation.isStartValid &&
@@ -43,12 +53,12 @@ const getIsValid = (state: AppState) => {
   );
 };
 
-const getIsVisible = (state: AppState) => getState(state).isVisible;
+const getIsVisible = (state: AppointmentEditor) => state.isVisible;
 
-const getStartErrorMessage = (state: AppState) => {
-  const strings = getStrings(state);
-  const validation = getState(state).validation;
-
+const getStartErrorMessage = (
+  validation: Validation,
+  strings: AppointmentEditorStrings
+) => {
   if (!validation.hasSetStart) {
     return '';
   }
@@ -68,10 +78,11 @@ const getStartErrorMessage = (state: AppState) => {
   return '';
 };
 
-const getEndErrorMessage = (state: AppState) => {
-  const strings = getStrings(state);
-  const validation = getState(state).validation;
-
+const getEndErrorMessage = (
+  validation: Validation,
+  strings: AppointmentEditorStrings,
+  appointmentConflictTitle: string
+) => {
   if (!validation.hasSetEnd) {
     return '';
   }
@@ -86,35 +97,80 @@ const getEndErrorMessage = (state: AppState) => {
 
   if (validation.appointmentConflictId) {
     // TODO: integrate format library
-    return (
-      strings.conflictErrorFormat +
-      appointmentSelectors.getAppointmentTitle(
-        state,
-        validation.appointmentConflictId
-      )
-    );
+    return strings.conflictErrorFormat + appointmentConflictTitle;
   }
 
   return '';
 };
 
-const getPlaceholderTitle = (state: AppState) =>
-  getStrings(state).placeholderTitle;
+const getPlaceholderTitle = (strings: AppointmentEditorStrings) =>
+  strings.placeholderTitle;
 
-const getSaveLabel = (state: AppState) => getStrings(state).saveLabel;
+const getSaveLabel = (strings: AppointmentEditorStrings) => strings.saveLabel;
 
-export default {
+export const rawSelectors = {
   getDeleteLabel,
   getEditingAppointment,
   getEditingAppointmentTitle,
+  getEditingAppointmentStart,
   getEditingAppointmentStartAsString,
-  getEditingAppointmentMinimumStartAsString,
-  getEditingAppointmentMinimumEndAsString,
+  getEditingAppointmentEnd,
   getEditingAppointmentEndAsString,
+  getValidationState,
   getIsValid,
   getIsVisible,
   getStartErrorMessage,
   getEndErrorMessage,
   getPlaceholderTitle,
   getSaveLabel
+};
+
+// Global selectors
+
+const getState = (state: AppState) => state.components.appointmentEditor;
+
+const getStrings = (state: AppState) => state.strings.appointmentEditor;
+
+const getTitleOfConflictingAppointment = (state: AppState): string => {
+  return appointmentSelectors.getAppointmentTitle(
+    state,
+    localizedSelectors.getValidationState(state).appointmentConflictId
+  );
+};
+
+const localizedSelectors = {
+  getDeleteLabel: createLocalSelector(getStrings, getDeleteLabel),
+  getEditingAppointment: createLocalSelector(getState, getEditingAppointment),
+  getEditingAppointmentTitle: createLocalSelector(
+    getState,
+    getEditingAppointmentTitle
+  ),
+  getEditingAppointmentStartAsString: createLocalSelector(
+    getState,
+    getEditingAppointmentStartAsString
+  ),
+  getEditingAppointmentEndAsString: createLocalSelector(
+    getState,
+    getEditingAppointmentEndAsString
+  ),
+  getValidationState: createLocalSelector(getState, getValidationState),
+  getIsValid: createLocalSelector(getState, getIsValid),
+  getIsVisible: createLocalSelector(getState, getIsVisible),
+  getPlaceholderTitle: createLocalSelector(getStrings, getPlaceholderTitle),
+  getSaveLabel: createLocalSelector(getStrings, getSaveLabel)
+};
+
+export default {
+  ...localizedSelectors,
+  getStartErrorMessage: createSelector(
+    localizedSelectors.getValidationState,
+    getStrings,
+    getStartErrorMessage
+  ),
+  getEndErrorMessage: createSelector(
+    localizedSelectors.getValidationState,
+    getStrings,
+    getTitleOfConflictingAppointment,
+    getEndErrorMessage
+  )
 };

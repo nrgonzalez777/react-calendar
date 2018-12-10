@@ -1,14 +1,20 @@
+import { createSelector } from 'reselect';
+
 import { AppState } from 'store/state';
 import { calendarSelectors } from 'components/Calendar/store';
 import { appointmentSelectors } from 'entities/appointments';
+import { Appointment } from 'entities/appointments/state';
+import { Day } from 'entities/time/state';
 
-const getTopOffsetPercent = (state: AppState, appointmentId: string) => {
-  const appointment = appointmentSelectors.getAppointmentById(
+/*
+const appointment = appointmentSelectors.getAppointmentById(
     state,
     appointmentId
   );
   const selectedDay = calendarSelectors.getSelectedDay(state);
+  */
 
+const getTopOffsetPercent = (appointment: Appointment, selectedDay: Day) => {
   if (!appointment.start) {
     return 0;
   }
@@ -21,13 +27,7 @@ const getTopOffsetPercent = (state: AppState, appointmentId: string) => {
   return minutesAtStart > 0 ? minutesAtStart / 1440 : 0;
 };
 
-const getHeightPercent = (state: AppState, appointmentId: string) => {
-  const appointment = appointmentSelectors.getAppointmentById(
-    state,
-    appointmentId
-  );
-  const selectedDay = calendarSelectors.getSelectedDay(state);
-
+const getHeightPercent = (appointment: Appointment, selectedDay: Day) => {
   if (!appointment.start || !appointment.end) {
     return 0;
   }
@@ -45,7 +45,7 @@ const getHeightPercent = (state: AppState, appointmentId: string) => {
 
   // minutes per hour
   const heightPercent = minutesDiff / 1440;
-  const topPercent = getTopOffsetPercent(state, appointmentId);
+  const topPercent = getTopOffsetPercent(appointment, selectedDay);
 
   if (heightPercent + topPercent > 1) {
     return Math.min(heightPercent - topPercent, 1);
@@ -54,7 +54,22 @@ const getHeightPercent = (state: AppState, appointmentId: string) => {
   return heightPercent;
 };
 
-export default {
+export const rawSelectors = {
   getTopOffsetPercent,
   getHeightPercent
+};
+
+export default {
+  getTopOffsetPercent: createSelector(
+    (state: AppState, appointmentId: string) =>
+      appointmentSelectors.getAppointmentById(state, appointmentId),
+    calendarSelectors.getSelectedDay,
+    getTopOffsetPercent
+  ),
+  getHeightPercent: createSelector(
+    (state: AppState, appointmentId: string) =>
+      appointmentSelectors.getAppointmentById(state, appointmentId),
+    calendarSelectors.getSelectedDay,
+    getHeightPercent
+  )
 };
