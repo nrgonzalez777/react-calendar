@@ -47,10 +47,10 @@
     "source-map-loader": "^0.2.1",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
-    "ts-jest": "^20.0.7",
-    "ts-loader": "^2.3.7",
+    "ts-jest": "20.0.7",
+    "ts-loader": "2.3.7",
     "tsconfig-paths-webpack-plugin": "2.0.0",
-    "tslint": "^5.7.0",
+    "tslint": "5.7.0",
     "tslint-config-airbnb": "5.11.0",
     "tslint-config-prettier": "1.15.0",
     "tslint-react": "3.2.0",
@@ -97,6 +97,9 @@
       "jsx",
       "json",
       "node"
+    ],
+    "modulePaths": [
+      "src/"
     ],
     "globals": {
       "ts-jest": {
